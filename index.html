@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>50 Projetos de Móveis 3D para Gatos — Plano de corte que fecha na serra</title>
+<meta name="description" content="50 projetos de móveis para gatos com plano de corte calculado por engenharia, lista de peças com medida exata e visualização 3D. Para marceneiro que quer um produto novo pra vender." />
+
+<!-- Pixel Utmify -->
+<script>
+  window.pixelId = "6aa754da356ad930a1e76c9a";
+  var a = document.createElement("script");
+  a.setAttribute("async",""); a.setAttribute("defer","");
+  a.setAttribute("src","https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,600&family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+<!-- Import map: o OrbitControls do Three.js importa "three" como bare
+     specifier internamente; sem isto o navegador não sabe resolver esse
+     import. O script-módulo do visualizador 3D só roda depois que isto já
+     está no DOM, então a resolução funciona mesmo carregando mais tarde.
+     Atenção: nunca escrever a tag script entre aspas angulares dentro
+     deste comentário — o parser HTML fecha o comentário ali mesmo. -->
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+
+<style>
+/* ============================================================
+   TOKENS — paleta trazida da área de membros real (app/globals.css):
+   grafite/carvão neutro de fundo, laranja de madeira como ação/marca,
+   verde de "pronto" e âmbar de "preparando" como estados. Sem marrom-terra.
+   ============================================================ */
+:root{
+  /* Primária — grafite/carvão neutro (fundo das seções escuras, autoridade
+     de oficina técnica — o mesmo papel visual do --texto #111827 da área
+     de membros, só que como superfície grande em vez de texto) */
+  --primary:        hsl(222, 20%, 14%);
+  --primary-dark:   hsl(224, 24%, 9%);
+  --primary-light:  hsl(220, 16%, 24%);
+  --primary-soft:   hsl(210, 30%, 96%);
+
+  /* Accent vivo 1 — laranja de madeira (o --acao #ea580c da área de membros):
+     eyebrows, chips, bordas ativas, réguas, CTA de destaque */
+  --coral:          hsl(21, 90%, 48%);
+  --coral-dark:     hsl(15, 78%, 36%);
+  --coral-light:    hsl(24, 95%, 62%);
+  --coral-soft:     hsl(24, 100%, 95%);
+
+  /* Accent vivo 2 — âmbar (o --preparando #92400e da área de membros):
+     citações, apoio, segundo destaque */
+  --leaf:           hsl(32, 95%, 44%);
+  --leaf-dark:      hsl(28, 84%, 32%);
+  --leaf-soft:      hsl(35, 90%, 95%);
+
+  /* Tom claro ANÁLOGO à primária — grifos sobre fundo escuro */
+  --mint:           hsl(24, 90%, 68%);
+
+  /* Semânticos */
+  --strike:         hsl(348, 76%, 46%);
+  --deny:           hsl(354, 76%, 50%);
+  --buy:            hsl(142, 84%, 43%);
+  --buy-dark:       #06a742;
+  --success:        hsl(142, 90%, 34%);
+
+  /* Dourado do CTA final — RESTRITO a fundo escuro (aqui, laranja quente) */
+  --gold:           hsl(28, 92%, 54%);
+  --gold-light:     hsl(30, 96%, 68%);
+
+  /* Neutros dessaturados — cinza-azulado (o --fundo-alt #e8eef3 da área de
+     membros), não mais bege quente */
+  --bg-marfim:      hsl(210, 24%, 97%);
+  --bg-marfim-deep: hsl(210, 20%, 94%);
+  --text-dark:      hsl(222, 30%, 12%);
+  --text-body:      hsl(222, 14%, 28%);
+  --text-muted:     hsl(220, 10%, 45%);
+  --white:          #ffffff;
+  --border:         hsl(214, 18%, 86%);
+
+  --container: 980px;
+  --container-narrow: 760px;
+  --radius-sm: 10px;  --radius-md: 18px;
+  --radius-lg: 26px;  --radius-pill: 999px;
+
+  --shadow-subtle: 0 4px 18px  hsla(222,30%,14%,.08);
+  --shadow-medium: 0 14px 40px hsla(222,30%,12%,.14);
+  --shadow-large:  0 30px 70px hsla(222,35%,10%,.22);
+  --shadow-gold:   0 12px 34px hsla(28,80%,42%,.28);
+
+  --transition: .4s cubic-bezier(.2,.7,.3,1);
+
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-num:     'Outfit', sans-serif;
+  --font-serif:   'Barlow Condensed', sans-serif;
+
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* ===== Base ===== */
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body{ font-family:var(--font-body); color:var(--text-body);
+      background:var(--bg-marfim); line-height:1.65; overflow-x:hidden; }
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+.container{ width:100%; max-width:var(--container); margin:0 auto; padding:0 22px; }
+.narrow{ max-width:var(--container-narrow); }
+section{ padding:84px 0; position:relative; }
+
+/* ===== section-head ===== */
+.section-head{ text-align:center; max-width:640px; margin:0 auto 52px; }
+.section-head .eyebrow{
+  display:inline-block; font-family:var(--font-num); font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; font-size:.72rem;
+  color:var(--coral-dark); margin-bottom:14px;
+}
+.section-head h2{
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(1.6rem, 4.3vw, 2.45rem); line-height:1.18;
+  color:var(--text-dark); letter-spacing:-.02em;
+}
+.section-head h2 .hl{ color:var(--primary); font-style:italic; }
+.section-head .rule{
+  width:74px; height:3px; margin:20px auto 0;
+  background:linear-gradient(90deg,var(--coral),var(--leaf));
+  border-radius:99px;
+}
+.section-head p{ margin-top:18px; color:var(--text-muted); font-size:1.06rem; }
+.dark-head .eyebrow{ color:var(--gold-light); }
+.dark-head h2{ color:#fff; }
+.dark-head h2 .hl{ color:var(--gold-light); }
+.dark-head p{ color:hsl(38,25%,86%); }
+
+/* ===== Botões ===== */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.55em;
+  font-family:var(--font-num); font-weight:700; font-size:1.06rem;
+  color:#fff; background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));
+  padding:18px 34px; border-radius:var(--radius-pill); border:none; cursor:pointer;
+  box-shadow:var(--shadow-medium); transition:var(--transition); text-align:center;
+}
+.btn:hover{ transform:translateY(-3px); box-shadow:var(--shadow-large); }
+.btn .arrow{ transition:transform .3s; }
+.btn:hover .arrow{ transform:translateX(4px); }
+.btn-gold{ background:linear-gradient(135deg,var(--gold-light),var(--gold));
+           color:var(--primary-dark); box-shadow:var(--shadow-gold); }
+.btn-buy{ background:linear-gradient(135deg,#12c74e,var(--buy-dark)); color:#fff;
+          box-shadow:0 14px 34px hsla(145,90%,30%,.34); animation:pulse 2.4s infinite; }
+.btn-ghost{ background:transparent; color:var(--primary);
+            border:2px solid var(--border); box-shadow:none; font-weight:600; }
+.btn-lg{ padding:21px 42px; font-size:1.12rem; }
+.btn-block{ width:100%; }
+@keyframes pulse{
+  0%  { box-shadow:0 14px 34px hsla(145,90%,30%,.34), 0 0 0 0    hsla(145,80%,40%,.4); }
+  70% { box-shadow:0 14px 34px hsla(145,90%,30%,.34), 0 0 0 16px hsla(145,80%,40%,0); }
+  100%{ box-shadow:0 14px 34px hsla(145,90%,30%,.34), 0 0 0 0    hsla(145,80%,40%,0); }
+}
+
+/* ===== 0. Topbar ===== */
+.topbar{
+  background:
+    radial-gradient(700px 120px at 50% 0%, hsl(222,30%,22%), transparent 65%),
+    linear-gradient(90deg,hsl(222,26%,8%),hsl(222,22%,13%),hsl(222,26%,8%));
+  color:var(--gold-light); overflow:hidden; padding:11px 0; position:relative;
+}
+.topbar::before,.topbar::after{ content:""; position:absolute; top:0; bottom:0;
+  width:8%; z-index:2; pointer-events:none; }
+.topbar::before{ left:0;  background:linear-gradient(90deg,hsl(222,26%,8%),transparent); }
+.topbar::after { right:0; background:linear-gradient(270deg,hsl(222,26%,8%),transparent); }
+.topbar-track{ display:flex; width:max-content; animation:topbar-scroll 32s linear infinite; }
+.topbar:hover .topbar-track{ animation-play-state:paused; }
+.topbar-seq{ display:flex; align-items:center; flex:none;
+  font-family:var(--font-num); font-weight:700; font-size:.82rem; letter-spacing:.04em; }
+.tb-item{ padding:0 22px; white-space:nowrap; }
+.tb-star{ color:var(--gold); opacity:.65; font-size:.72rem; }
+@keyframes topbar-scroll{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ===== 1. Hero ===== */
+.hero{
+  background:
+    radial-gradient(1100px 560px at 50% -12%, hsl(222,28%,20%), transparent 62%),
+    radial-gradient(760px 460px at 88% 6%, hsla(33,62%,42%,.30), transparent 60%),
+    linear-gradient(180deg, hsl(222,24%,14%), hsl(222,26%,9%));
+  color:#fff; padding:62px 0 84px; overflow:hidden;
+}
+.hero-stack{ display:flex; flex-direction:column; align-items:center;
+             text-align:center; max-width:920px; margin:0 auto; }
+.hero h1{ font-family:var(--font-display); font-weight:800;
+  font-size:clamp(1.4rem, 4.4vw, 2.5rem); line-height:1.42;
+  color:#fff; letter-spacing:-.03em; text-wrap:pretty; }
+.hero h1 .hl-block{
+  background:linear-gradient(135deg, var(--buy), var(--buy-dark));
+  color:#fff; padding:.06em .3em; border-radius:7px;
+  white-space:nowrap;
+  -webkit-box-decoration-break:clone; box-decoration-break:clone;
+  box-shadow:inset 0 1px 0 hsla(0,0%,100%,.22);
+}
+.hero h1 .br-d{ display:none; }
+@media (min-width:900px){ .hero h1 .br-d{ display:inline; } }
+.hero p.sub{ margin-top:24px; font-family:var(--font-display); font-weight:400;
+  font-size:1.06rem; line-height:1.62; color:#fff; max-width:680px; }
+.hero p.sub b{ color:#fff; font-weight:700; }
+
+.book-stage{ position:relative; display:flex; justify-content:center;
+             align-items:center; margin-top:20px; width:100%; }
+.book-glow{ position:absolute; width:86%; height:74%;
+  background:radial-gradient(circle,hsla(33,80%,55%,.45),transparent 66%);
+  filter:blur(46px); opacity:.6; z-index:0; }
+.hero-mockup{ position:relative; z-index:1; width:100%; max-width:680px; height:auto;
+  filter:drop-shadow(0 30px 55px hsla(222,40%,4%,.55)); }
+
+.hero-trust{ display:flex; gap:10px; flex-wrap:nowrap; justify-content:center; margin-top:34px; }
+.hero-trust span{ display:inline-flex; align-items:center; gap:.45em;
+  font-family:var(--font-num); font-weight:700; font-size:.82rem; white-space:nowrap;
+  color:hsl(36,60%,96%);
+  background:hsla(0,0%,100%,.09); border:1px solid hsla(36,60%,70%,.3);
+  padding:9px 16px; border-radius:10px; }
+
+.hero-delivery{ font-size:.94rem; font-weight:600; line-height:1.8;
+  color:hsl(36,50%,95%); text-align:center; max-width:360px; margin:22px auto 0; }
+.hero-delivery b{ color:#fff; font-weight:700; }
+.hero-delivery .nowrap{ white-space:nowrap; }
+.hero-delivery-ic{ display:inline-block; width:20px; height:20px; vertical-align:-5px; margin-right:3px; }
+
+.hero-cta{ margin-top:18px; }
+.hero-social{ margin-top:26px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+.hero-social-avatars{ display:flex; }
+.hero-social-avatars img{ width:38px; height:38px; border-radius:50%; object-fit:cover;
+  border:2px solid hsl(222,26%,9%); margin-left:-10px; background:#171d29; }
+.hero-social-avatars img:first-child{ margin-left:0; }
+.hero-social-label{ font-family:var(--font-num); font-weight:800; font-size:.9rem;
+  letter-spacing:.03em; color:var(--gold-light); text-transform:uppercase; }
+
+/* ===== 2. Vitrine ===== */
+.vitrine{ background:var(--white); }
+.grid-desire{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+
+/* ===== 2b. Cards de modelo 3D sob demanda ===== */
+.grid-desire--3d{ grid-template-columns:repeat(4,1fr); }
+.model-card{
+  background:var(--bg-marfim); border:1px solid var(--border);
+  border-radius:var(--radius-md); padding:0 26px 30px;
+  transition:var(--transition); position:relative; overflow:hidden;
+}
+.model-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-medium); }
+.model-stage{
+  position:relative; width:calc(100% + 52px); margin:0 -26px 22px;
+  aspect-ratio:3 / 2; background:#fff; border-bottom:1px solid var(--border);
+  overflow:hidden;
+}
+.model-thumb{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:8%; background:#fff; }
+.model-canvas{ position:absolute; inset:0; width:100%; height:100%; cursor:grab; touch-action:none; }
+.model-canvas:active{ cursor:grabbing; }
+.model-cta{
+  position:absolute; left:50%; bottom:16px; transform:translateX(-50%);
+  display:inline-flex; align-items:center; gap:.5em;
+  font-family:var(--font-num); font-weight:700; font-size:.92rem;
+  color:#fff; background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));
+  padding:11px 22px; border-radius:var(--radius-pill); border:none; cursor:pointer;
+  box-shadow:var(--shadow-medium); transition:var(--transition); z-index:2;
+}
+.model-cta:hover{ transform:translateX(-50%) translateY(-2px); box-shadow:var(--shadow-large); }
+.model-cta .model-cta-ic{ font-size:.72em; }
+.model-card.is-loading .model-cta{ pointer-events:none; opacity:.75; }
+.model-card.is-loading .model-cta .model-cta-ic{ animation:model-spin 1s linear infinite; }
+.model-card.is-open .model-cta{ background:hsla(222,20%,10%,.55); backdrop-filter:blur(3px); }
+@keyframes model-spin{ from{transform:rotate(0)} to{transform:rotate(360deg)} }
+.model-hint{
+  position:absolute; top:10px; right:10px; z-index:2;
+  font-family:var(--font-num); font-weight:600; font-size:.68rem;
+  color:hsla(0,0%,100%,.9); background:hsla(222,25%,12%,.55);
+  padding:4px 9px; border-radius:var(--radius-pill); pointer-events:none;
+  opacity:0; transition:opacity .3s;
+}
+.model-card.is-open .model-hint{ opacity:1; }
+.model-card .verse{
+  font-family:var(--font-num); font-weight:800; font-size:.78rem;
+  color:var(--coral-dark); letter-spacing:.08em; text-transform:uppercase;
+  margin:22px 0 12px; display:block;
+}
+.model-card h3{ font-family:var(--font-display); font-weight:700; font-size:1.16rem;
+                color:var(--primary); margin-bottom:10px; line-height:1.3; }
+.model-card p{ font-family:var(--font-serif); font-size:1.14rem; line-height:1.45; }
+
+.desire-strip{
+  --scroll: 0;
+  margin-top:48px; max-width:720px; margin-inline:auto; text-align:center;
+  position:relative; isolation:isolate; border-radius:var(--radius-lg); padding:40px 48px;
+  background:
+    radial-gradient(760px 240px at 50% -40%, hsla(38,62%,52%,.28), transparent 72%),
+    linear-gradient(150deg, var(--primary-light), var(--primary-dark) 78%);
+  box-shadow:var(--shadow-large), inset 0 1px 0 hsla(41,60%,80%,.14);
+  overflow:hidden;
+}
+.desire-strip::before{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit; padding:14px;
+  background:radial-gradient(circle, hsla(41,72%,72%,.9) 1.6px, transparent 2px) 0 0 / 13px 13px;
+  -webkit-mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+  -webkit-mask-clip:padding-box, border-box;
+  opacity:.55; background-position: calc(var(--scroll) * 13px) center;
+}
+.desire-strip::after{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:radial-gradient(420px 300px at calc(var(--scroll) * 130% - 15%) 40%,
+             hsla(41,85%,74%,.22), transparent 62%);
+  pointer-events:none; transition:background .1s linear;
+}
+.desire-strip .ds-icon{ display:block; font-size:1.5rem; color:var(--gold-light);
+  opacity:.85; margin-bottom:10px; letter-spacing:.3em; }
+.desire-strip .ds-text{ font-family:var(--font-serif); font-size:1.5rem;
+  line-height:1.45; color:#fdf3e6; }
+.desire-strip strong{ color:var(--gold-light); }
+.desire-strip .ds-underline{ position:relative; color:#fff; white-space:nowrap; }
+.desire-strip .ds-underline::after{
+  content:""; position:absolute; left:0; right:0; bottom:-4px; height:3px;
+  border-radius:99px; transform-origin:left center; transform:scaleX(var(--scroll));
+  background:linear-gradient(90deg, var(--gold-light), var(--gold));
+  box-shadow:0 0 12px hsla(41,80%,65%,.6);
+}
+
+/* ===== 3. Comparativo ===== */
+.compare{ background:linear-gradient(180deg,var(--bg-marfim),var(--bg-marfim-deep)); }
+.compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:stretch; }
+.compare-col{ background:#fff; border-radius:var(--radius-lg); padding:34px 30px;
+              border:1px solid var(--border); box-shadow:var(--shadow-subtle);
+              position:relative; isolation:isolate; overflow:hidden; }
+.compare-col.bad{ background:hsl(214,16%,97%); border-color:hsl(214,16%,88%); }
+.compare-col.good{
+  background:
+    radial-gradient(120% 90% at 85% -10%, hsla(38,60%,55%,.22), transparent 55%),
+    linear-gradient(158deg, var(--primary-light) -20%, var(--primary) 42%, var(--primary-dark) 105%);
+  color:#fff; border:1px solid hsla(38,70%,68%,.28);
+  box-shadow:var(--shadow-large); }
+.compare-col .tag{ display:inline-flex; align-items:center; gap:.4em;
+  font-family:var(--font-num); font-weight:700; font-size:.74rem; letter-spacing:.1em;
+  text-transform:uppercase; padding:6px 14px; border-radius:var(--radius-pill); margin-bottom:8px; }
+.bad .tag{ background:hsl(214,18%,92%); color:var(--text-muted); }
+.good .tag{ background:var(--coral-dark); color:#fff; }
+.compare-col h3{ font-family:var(--font-display); font-weight:700; font-size:1.2rem;
+  margin:8px 0 20px; line-height:1.35; }
+.bad h3{ color:var(--text-dark); }
+.good h3{ color:#fff; }
+.compare-col ul{ list-style:none; display:flex; flex-direction:column; gap:15px; }
+.compare-col li{ display:flex; gap:12px; align-items:flex-start; font-size:1rem; line-height:1.5; }
+.compare-col li .ic{ flex:none; width:24px; height:24px; border-radius:50%;
+  display:grid; place-items:center; font-weight:800; font-size:.85rem; margin-top:2px; }
+.bad  li .ic{ background:#fff; border:2px solid hsl(214,14%,82%); color:hsl(214,8%,52%); }
+.good li .ic{ background:var(--buy-dark); border:2px solid var(--buy-dark); color:#fff;
+              box-shadow:0 2px 10px hsla(142,93%,24%,.45); }
+.good li b{
+  color:var(--mint); font-weight:700;
+  text-decoration:underline; text-decoration-color:hsla(24,90%,70%,.5);
+  text-decoration-thickness:2px; text-underline-offset:3px;
+  -webkit-box-decoration-break:clone; box-decoration-break:clone;
+}
+.compare-col::before{ content:""; position:absolute; inset:0; z-index:-1;
+  pointer-events:none; background-image:var(--grain); background-size:220px 220px; }
+.compare-col.bad::before{ opacity:.1;  mix-blend-mode:multiply; }
+.compare-col.good::before{ opacity:.45; mix-blend-mode:soft-light; }
+
+/* ===== 4. Veja por dentro ===== */
+.inside{ background:var(--white); }
+
+/* Carrossel horizontal de nomes de projeto — mesma engine do .page-marquee
+   logo abaixo (mask nas bordas + track duplicado que desliza sozinho).
+   Substitui o antigo card estático de flipbook e a lista fixa em grade:
+   aqui os badges sangram pra fora do container e rolam em loop. */
+.cat-marquee{ display:flex; flex-direction:column; gap:12px; margin-bottom:48px; }
+.cat-row{ overflow-x:clip; overflow-y:visible;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
+.cat-track{ display:flex; gap:10px; width:max-content; will-change:transform; padding:6px 0; }
+.cat-track.cat-left { animation:pm-scroll-left  46s linear infinite; }
+.cat-track.cat-right{ animation:pm-scroll-right 46s linear infinite; }
+.cat-marquee:hover .cat-track{ animation-play-state:paused; }
+.cat-badge{
+  display:inline-flex; align-items:center; flex:none; white-space:nowrap;
+  font-family:var(--font-num); font-weight:600; font-size:.86rem;
+  color:var(--text-body); background:var(--bg-marfim); border:1px solid var(--border);
+  padding:8px 15px; border-radius:var(--radius-pill);
+  box-shadow:var(--shadow-subtle);
+}
+/* destaque: gradiente laranja claro → escuro, para os projetos que têm
+   modelo 3D navegável nesta própria página (seção 2, acima) */
+.cat-badge--destaque{
+  font-weight:800; color:#fff; border-color:transparent;
+  background:linear-gradient(135deg,var(--coral-light),var(--coral-dark));
+  box-shadow:0 8px 20px hsla(21,80%,45%,.28);
+}
+
+.page-marquee{ display:flex; flex-direction:column; gap:10px; }
+.pm-row{ overflow-x:clip; overflow-y:visible;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
+.pm-track{ display:flex; gap:26px; width:max-content; will-change:transform; padding:14px 0; }
+.pm-left { animation:pm-scroll-left  34s linear infinite; }
+.pm-right{ animation:pm-scroll-right 34s linear infinite; }
+.pm-slow { animation-duration:42s; }
+.page-marquee:hover .pm-track{ animation-play-state:paused; }
+.pm-img{ display:block; height:300px; width:auto; flex:none;
+  border-radius:var(--radius-md); border:1px solid var(--border);
+  box-shadow:0 6px 18px hsla(222,25%,15%,.12); object-fit:contain; background:#fffdf8; }
+@keyframes pm-scroll-left { from{transform:translateX(0)}    to{transform:translateX(-50%)} }
+@keyframes pm-scroll-right{ from{transform:translateX(-50%)} to{transform:translateX(0)} }
+
+.mid-cta{ margin-top:48px; text-align:center;
+  background:
+    radial-gradient(130% 110% at 50% -25%, hsl(222,25%,18%), transparent 62%),
+    linear-gradient(160deg, var(--primary), var(--primary-dark));
+  border:1px solid hsla(222,30%,50%,.2);
+  border-radius:var(--radius-lg); padding:38px 32px 32px;
+  box-shadow:var(--shadow-large); position:relative; isolation:isolate; }
+.mc-chip{ display:inline-flex; align-items:center; gap:.5em;
+  font-family:var(--font-num); font-weight:700; font-size:.71rem;
+  letter-spacing:.12em; text-transform:uppercase;
+  background:var(--coral-dark); color:#fff;
+  padding:7px 16px; border-radius:var(--radius-pill); margin-bottom:20px; }
+.mid-cta .mc-title{ font-family:var(--font-num); font-weight:600;
+  font-size:clamp(1.1rem, 2.9vw, 1.4rem); line-height:1.4; color:#fff;
+  letter-spacing:-.015em; max-width:30ch; margin:0 auto; }
+.mid-cta .mc-title strong{ color:#fff; font-weight:800; }
+.mid-cta .small{ font-family:var(--font-num); font-weight:500; font-size:.92rem;
+  color:hsla(0,0%,100%,.8); margin:12px 0 24px; }
+.mid-cta .btn{ background:#0fbf4b; color:#fff;
+  box-shadow:0 12px 32px hsla(142,88%,16%,.5); }
+.mid-cta .btn:hover{ background:#0dad43; }
+.mc-facts{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px 22px;
+  margin-top:26px; padding-top:20px; border-top:1px solid hsla(0,0%,100%,.14);
+  font-family:var(--font-num); font-weight:500; font-size:.82rem;
+  color:hsla(0,0%,100%,.7); }
+.mc-facts b{ color:var(--mint); font-weight:800; }
+
+/* ===== 6. Bônus ===== */
+.bonus{ background:linear-gradient(160deg,var(--primary-dark),var(--primary)); color:#fff; }
+.grid-bonus{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:68px 22px; max-width:760px; margin-inline:auto; padding-top:56px; }
+.bonus-card{ background:#fff; border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:52px 26px 28px;
+  display:flex; flex-direction:column; box-shadow:var(--shadow-medium);
+  transition:var(--transition); position:relative; isolation:isolate; }
+.bonus-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-large);
+                   border-color:var(--gold); }
+.bonus-card .cover{ aspect-ratio:16/10; margin:-38px 0 10px;
+  background:transparent; border:none; box-shadow:none; overflow:visible;
+  display:grid; place-items:center; }
+.bonus-card .cover img{ width:112%; max-width:none; height:auto; object-fit:contain;
+  filter:drop-shadow(0 18px 26px hsla(222,30%,10%,.32));
+  transition:transform .45s cubic-bezier(.2,.7,.3,1); }
+.bonus-card:hover .cover img{ transform:translateY(-6px) scale(1.04); }
+.bonus-card h3{ font-family:var(--font-serif); font-weight:700; font-size:1.5rem;
+                color:var(--primary); margin-bottom:8px; line-height:1.2; }
+.bonus-card p{ font-size:.96rem; line-height:1.5; flex:1; color:var(--text-body); }
+.bonus-price{ margin-top:18px; padding-top:16px; border-top:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.bonus-price s{ color:hsl(0,72%,50%); font-size:.95rem; font-weight:600; }
+.bonus-price .free{ font-family:var(--font-num); font-weight:800; font-size:.82rem;
+  color:#fff; background:linear-gradient(135deg,#12c74e,var(--buy-dark));
+  padding:5px 12px; border-radius:var(--radius-pill); white-space:nowrap;
+  box-shadow:0 8px 20px hsla(145,90%,30%,.28); }
+
+.bonus-final{ margin-top:54px; max-width:640px; margin-inline:auto; text-align:center;
+  position:relative; isolation:isolate; border-radius:var(--radius-lg); padding:40px 34px 38px;
+  background:#fff; border:1px solid var(--border); box-shadow:var(--shadow-large);
+  overflow:hidden; }
+.bonus-final::after{ content:""; position:absolute; top:0; bottom:0; left:-60%;
+  width:45%; z-index:-1;
+  background:linear-gradient(100deg, transparent, hsla(145,60%,75%,.12), transparent);
+  transform:skewX(-18deg); animation:bonus-shine 5.5s ease-in-out infinite; }
+@keyframes bonus-shine{ 0%,60%{left:-60%} 100%{left:130%} }
+.bonus-final-badge{ display:inline-flex; align-items:center; gap:.5em;
+  font-family:var(--font-num); font-weight:800; font-size:.78rem;
+  text-transform:uppercase; color:#fff;
+  background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));
+  padding:7px 16px; border-radius:var(--radius-pill); margin-bottom:18px;
+  box-shadow:var(--shadow-medium); animation:badge-bob 2.6s ease-in-out infinite; }
+@keyframes badge-bob{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.bonus-sum{ font-family:var(--font-serif); font-size:1.55rem; line-height:1.4;
+            color:var(--text-dark); margin:0 0 26px; }
+.bonus-sum .was{ color:hsl(0,72%,50%); font-weight:600; text-decoration-thickness:2px; }
+.bonus-sum strong{ color:var(--buy-dark); font-weight:700; }
+.bonus-final-note{ display:block; margin-top:16px; font-size:.86rem; color:var(--text-muted); }
+
+/* ===== 7. Depoimentos ===== */
+.testi{ background:var(--white); }
+.grid-testi{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+.testi-card{ background:var(--bg-marfim); border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:34px 28px; transition:var(--transition);
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  position:relative; isolation:isolate; }
+.testi-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow-medium); }
+.testi-head{ display:flex; flex-direction:column; align-items:center; gap:4px; margin-bottom:16px; }
+.testi-head .avatar{ width:82px; height:82px; border-radius:50%; object-fit:cover;
+  border:3px solid #fff; box-shadow:0 4px 14px hsla(222,25%,20%,.16); margin-bottom:12px; }
+.testi-head .name{ font-family:var(--font-num); font-weight:700; color:var(--text-dark); }
+.testi-head .meta{ font-size:.85rem; color:var(--text-muted); }
+.testi-head .verified{ color:var(--success); font-weight:700; }
+.testi-card .stars{ color:#f2a800; letter-spacing:2px; margin:6px 0 16px; }
+.testi-card .quote{ font-size:.98rem; line-height:1.6; }
+.testi-card .quote strong{ color:var(--text-dark); font-weight:700;
+  text-decoration:underline; text-decoration-color:hsla(33,62%,52%,.55);
+  text-decoration-thickness:2px; text-underline-offset:3px;
+  -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+
+/* ===== 8. Oferta ===== */
+.offer{ background:linear-gradient(160deg,hsl(222,28%,18%),hsl(222,28%,9%)); }
+.offer-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:26px; align-items:stretch; }
+.plan{ background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg);
+  padding:34px 30px; display:flex; flex-direction:column; box-shadow:var(--shadow-subtle);
+  position:relative; isolation:isolate; }
+.plan h3{ font-family:var(--font-display); font-weight:700; font-size:1.24rem;
+  color:var(--text-dark); }
+.plan .psub{ font-size:.92rem; margin-top:4px; color:var(--text-muted); }
+.plan.basic{ background:hsla(0,0%,100%,.07); border-color:hsla(214,30%,85%,.2);
+  box-shadow:none; backdrop-filter:blur(2px); }
+.plan.basic h3, .plan.basic .price{ color:#fff; }
+.plan.basic .psub{ color:hsla(214,20%,92%,.75); }
+.plan.basic li{ color:hsla(214,20%,95%,.9); }
+.plan.basic li.no{ color:hsla(214,18%,93%,.62); }
+.plan.basic li.no .ic{ background:var(--deny); border:2px solid var(--deny); color:#fff;
+                       box-shadow:0 2px 8px hsla(354,76%,32%,.4); }
+.plan.basic .btn-ghost{ color:#fff; border-color:hsla(214,30%,88%,.35); }
+.plan.vip{ border:2px solid var(--coral); box-shadow:var(--shadow-large);
+  background:#fff; padding-top:46px; text-align:center; }
+.plan.vip .ribbon{ position:absolute; top:0; left:50%; transform:translate(-50%,-50%);
+  display:inline-flex; align-items:center; gap:.4em; white-space:nowrap;
+  background:linear-gradient(90deg,var(--coral-dark),hsl(6,74%,30%)); color:#fff;
+  font-family:var(--font-num); font-weight:800; font-size:.74rem; letter-spacing:.08em;
+  text-transform:uppercase; padding:9px 22px; border-radius:var(--radius-pill);
+  box-shadow:var(--shadow-medium); }
+.plan.vip .plan-mockup{ display:block; width:100%; max-width:420px; margin:6px auto 20px; }
+.plan.vip .price-row{ display:flex; flex-direction:column; align-items:center; gap:2px; }
+.plan.vip .anchor{ color:var(--text-muted); font-size:1.05rem; }
+.plan.vip .anchor s{ color:var(--strike); font-weight:700; }
+.plan.vip .price{ color:var(--buy-dark); font-size:3rem; }
+.plan.vip .installment{ font-family:var(--font-num); font-weight:600; color:#0d1512;
+  font-size:.98rem; margin-top:6px; }
+.plan.vip .installment b{ color:var(--buy-dark); font-weight:800; }
+.plan.vip ul{ text-align:left; }
+.plan .price{ font-family:var(--font-num); font-weight:800; font-size:2.4rem;
+              line-height:1; margin:14px 0 4px; }
+.plan ul{ list-style:none; display:flex; flex-direction:column; gap:12px; margin:22px 0; flex:1; }
+.plan li{ display:flex; gap:11px; align-items:flex-start; font-size:.98rem; line-height:1.45; }
+.plan li .ic{ flex:none; width:22px; height:22px; border-radius:50%;
+              display:grid; place-items:center; font-size:.78rem; font-weight:800; margin-top:2px; }
+.plan li.yes .ic{ background:var(--buy-dark); border:2px solid var(--buy-dark); color:#fff;
+                  box-shadow:0 2px 8px hsla(142,93%,24%,.35); }
+.plan li.no{ color:var(--text-muted); }
+.plan li.no .ic{ background:#fff; border:2px solid var(--border); color:hsl(214,8%,55%); }
+.offer-secure{ margin-top:16px; text-align:center; font-size:.85rem; color:var(--text-muted);
+  display:flex; justify-content:center; gap:8px; flex-wrap:wrap; }
+
+/* ===== 9. Garantia ===== */
+.guarantee{ background:var(--white); }
+.guarantee-box{ max-width:720px; margin:0 auto; text-align:center;
+  background:linear-gradient(160deg,var(--leaf-soft),#ffffff);
+  border:1px solid var(--border); border-radius:var(--radius-lg); padding:48px 40px;
+  position:relative; isolation:isolate; }
+.seal-days-img{ width:250px; height:250px; max-width:80%; margin:0 auto 24px;
+  display:block; object-fit:contain; filter:drop-shadow(var(--shadow-medium)); }
+.guarantee-box h2{ font-family:var(--font-display); font-weight:800; font-size:1.6rem;
+                   color:var(--text-dark); margin-bottom:14px; }
+.guarantee-box p strong{ color:var(--primary); }
+
+/* ===== 10. FAQ ===== */
+.faq{ background:linear-gradient(180deg,var(--bg-marfim),var(--white)); }
+.faq-list{ max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+.faq-item{ background:#fff; border:1px solid var(--border);
+  border-radius:var(--radius-md); overflow:hidden; transition:var(--transition); }
+.faq-item[open]{ box-shadow:var(--shadow-subtle); border-color:var(--coral); }
+.faq-item summary{ list-style:none; cursor:pointer; padding:22px 26px;
+  font-family:var(--font-num); font-weight:700; color:var(--text-dark);
+  display:flex; justify-content:space-between; align-items:center; gap:16px; }
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary .plus{ flex:none; color:var(--coral-dark); font-size:1.5rem;
+                         transition:transform .3s; line-height:1; }
+.faq-item[open] summary .plus{ transform:rotate(45deg); }
+.faq-item .answer{ padding:0 26px 24px; line-height:1.6; }
+
+/* ===== 11. CTA final + 12. Footer ===== */
+.final{
+  background:
+    radial-gradient(900px 460px at 50% -6%, hsl(222,28%,20%), transparent 62%),
+    linear-gradient(160deg,hsl(222,25%,14%),hsl(222,26%,9%));
+  color:#fff; text-align:center;
+}
+.final .eyebrow{ color:var(--gold-light); font-family:var(--font-num); font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; font-size:.75rem; }
+.final h2{ font-family:var(--font-display); font-weight:800;
+  font-size:clamp(1.7rem,4.6vw,2.7rem); margin:16px auto 18px; max-width:660px;
+  line-height:1.2; letter-spacing:-.02em; }
+.final h2 .hl{ color:var(--gold-light); font-style:italic; }
+.final p.urg{ display:inline-flex; align-items:center; gap:9px;
+  background:hsla(0,0%,100%,.1); border:1px solid hsla(38,60%,70%,.3);
+  color:var(--gold-light); border-radius:var(--radius-pill);
+  padding:10px 22px; font-weight:600; margin-bottom:30px; }
+footer{ background:hsl(222,28%,7%); color:hsla(30,20%,85%,.7);
+        padding:52px 0 40px; text-align:center; position:relative; isolation:isolate; }
+footer .brand{ font-family:var(--font-display); font-weight:700;
+               color:var(--gold-light); font-size:1.24rem; margin-bottom:10px; }
+footer .verse{ font-family:var(--font-serif); font-style:italic; font-size:1.14rem;
+  color:hsla(38,40%,85%,.85); margin-bottom:22px; max-width:520px; margin-inline:auto; }
+footer .disclaimer{ font-size:.8rem; line-height:1.6; max-width:680px;
+                    margin:22px auto 0; color:hsla(38,30%,80%,.5); }
+footer .copy{ font-size:.82rem; margin-top:18px; }
+
+/* ===== Modal downsell ===== */
+.downsell-overlay{ position:fixed; inset:0; background:hsla(222,35%,6%,.72);
+  backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center;
+  padding:20px; z-index:120; }
+.downsell-overlay.open{ display:flex; }
+.downsell-modal{ background:var(--bg-marfim); border-radius:var(--radius-lg);
+  max-width:460px; width:100%; padding:38px 32px; text-align:center;
+  box-shadow:var(--shadow-large); position:relative; border:2px solid var(--coral);
+  animation:pop .35s cubic-bezier(.2,.8,.3,1.2); isolation:isolate;
+  max-height:92vh; overflow-y:auto; }
+@keyframes pop{ from{transform:scale(.9); opacity:0} to{transform:scale(1); opacity:1} }
+.downsell-modal .close{ position:absolute; top:14px; right:16px; background:none;
+  border:none; font-size:1.5rem; color:var(--text-muted); cursor:pointer; line-height:1; }
+.downsell-modal .dtag{ font-family:var(--font-num); font-weight:800; font-size:.74rem;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--coral-dark); margin-bottom:10px; }
+.downsell-modal h3{ font-family:var(--font-display); font-weight:700; font-size:1.4rem;
+                    color:var(--primary); margin-bottom:12px; line-height:1.3; }
+.downsell-modal .dmockup{ display:block; width:100%; max-width:330px; margin:14px auto 4px;
+  filter:drop-shadow(0 14px 26px hsla(222,30%,8%,.24)); }
+.downsell-modal .dprice{ font-family:var(--font-num); font-weight:800; font-size:2.2rem;
+                         color:var(--buy-dark); margin:14px 0 22px; }
+.downsell-modal .dprice s{ font-size:1.1rem; color:var(--strike); margin-right:8px; }
+.downsell-modal .refuse{ display:block; margin-top:16px; font-size:.86rem;
+  color:var(--text-muted); text-decoration:underline; cursor:pointer; }
+
+/* ===== Textura de grão ===== */
+.vitrine,.inside,.testi,.guarantee,.faq,
+.hero,.bonus,.offer,.final,footer,
+.model-card,.testi-card,.bonus-card,.plan,
+.guarantee-box,.bonus-final,.downsell-modal,.mid-cta{
+  position:relative; isolation:isolate;
+}
+.vitrine::before,.inside::before,.testi::before,.guarantee::before,.faq::before,
+.hero::before,.bonus::before,.offer::before,.final::before,footer::before,
+.model-card::before,.testi-card::before,.bonus-card::before,.plan::before,
+.guarantee-box::before,.bonus-final::before,.downsell-modal::before,
+.mid-cta::before{
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  border-radius:inherit;
+  background-image:var(--grain); background-size:220px 220px;
+}
+.vitrine::before,.inside::before,.testi::before,.guarantee::before,.faq::before,
+.model-card::before,.testi-card::before,.bonus-card::before,
+.plan.vip::before,.guarantee-box::before,.bonus-final::before,
+.downsell-modal::before{
+  opacity:.07; mix-blend-mode:multiply; }
+.hero::before,.bonus::before,.offer::before,.final::before,footer::before,
+.plan.basic::before,.mid-cta::before{
+  opacity:.4; mix-blend-mode:soft-light; }
+.hero::before{ opacity:.5; }
+
+/* ===== Scroll-reveal ===== */
+.reveal{ opacity:0; transform:translateY(28px);
+  transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
+.reveal.in{ opacity:1; transform:none; }
+.delay-1{ transition-delay:.12s; }
+.delay-2{ transition-delay:.24s; }
+.delay-3{ transition-delay:.36s; }
+
+/* ===== Breakpoints ===== */
+@media (max-width:900px){
+  .offer-grid{ grid-template-columns:1fr; }
+  .pm-img{ height:250px; }
+  .grid-desire--3d{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:860px){
+  .hero-mockup{ max-width:100%; }
+}
+@media (max-width:768px){
+  section{ padding:64px 0; }
+  .grid-desire,.grid-testi{ grid-template-columns:1fr; }
+  .grid-bonus{ grid-template-columns:1fr; gap:68px 22px; }
+  .compare-grid{ grid-template-columns:1fr; }
+  .grid-desire--3d{ grid-template-columns:1fr; }
+  .hero-trust{ flex-wrap:wrap; }
+  .desire-strip{ padding:32px 24px; }
+}
+@media (max-width:560px){
+  .pm-img{ height:190px; }
+  .cat-badge{ font-size:.9rem; padding:10px 16px; }
+  .hero-cta .btn, .btn-block{ width:100%; }
+  .plan{ padding:28px 22px; }
+  .plan.vip{ padding-top:44px; }
+  .guarantee-box{ padding:36px 22px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; scroll-behavior:auto; }
+  .reveal{ opacity:1; transform:none; transition:none; }
+  .pm-row,.cat-row{ overflow-x:auto; }
+  .desire-strip::before,.desire-strip::after{ background-position:center; }
+  .desire-strip .ds-underline::after{ transform:scaleX(1); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 0. TOPBAR ============ -->
+<div class="topbar">
+  <div class="topbar-track" id="topbarTrack">
+    <div class="topbar-seq">
+      <span class="tb-item">📐 Catálogo de projetos</span><span class="tb-star">✦</span>
+      <span class="tb-item">🪚 50 móveis para gatos</span><span class="tb-star">✦</span>
+      <span class="tb-item">🔨 Para quem já corta MDF</span><span class="tb-star">✦</span>
+      <span class="tb-item">📏 Medida calculada, não estimada</span><span class="tb-star">✦</span>
+      <span class="tb-item">💻 Acesso online + 3D</span><span class="tb-star">✦</span>
+      <span class="tb-item">🛡️ 15 dias de garantia</span><span class="tb-star">✦</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 1. HERO ============ -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-stack">
+
+      <h1 class="reveal in">Um catálogo pronto com<br class="br-d">
+        <span class="hl-block">50 móveis para gatos</span> que você<br class="br-d">
+        pode cortar e vender esta semana</h1>
+
+      <p class="sub reveal in delay-1">
+        Cada projeto vem com <b>lista de peças medida por medida</b>, plano de corte,
+        lista de compras separada e <b>modelo 3D que você gira na tela</b>.
+        A medida é <b>calculada por engenharia</b> — não é chute em cima de imagem.
+      </p>
+
+      <div class="book-stage reveal in delay-1">
+        <div class="book-glow"></div>
+        <img src="assets/mockups/hero-header-v2.webp" class="hero-mockup"
+             alt="Biblioteca de projetos 3D para móveis de gatos no notebook e celular, acompanhada de fichas técnicas"
+             fetchpriority="high" width="1448" height="1086" />
+      </div>
+
+      <div class="hero-trust reveal in delay-2">
+        <span>⚡ Acesso imediato</span>
+        <span>💻 100% online</span>
+      </div>
+
+      <div class="hero-delivery reveal in delay-2">
+        Você recebe tudo na hora, direto no seu
+        <span class="nowrap"><img src="icon-wpp.webp" alt="WhatsApp" class="hero-delivery-ic" /><b>WhatsApp</b></span>
+        e no seu
+        <span class="nowrap"><img src="icon-email.webp" alt="E-mail" class="hero-delivery-ic" /><b>e-mail</b></span>
+      </div>
+
+      <div class="hero-cta reveal in delay-2">
+        <a href="#comprar" class="btn btn-buy btn-lg">Quero ampliar meu catálogo <span class="arrow">➔</span></a>
+      </div>
+
+      <div class="hero-social reveal in delay-3">
+        <div class="hero-social-avatars">
+          <img src="assets/depoimentos/hero-1.jpg" loading="lazy" alt="" width="38" height="38" />
+          <img src="assets/depoimentos/hero-2.jpg" loading="lazy" alt="" width="38" height="38" />
+          <img src="assets/depoimentos/hero-3.jpg" loading="lazy" alt="" width="38" height="38" />
+          <img src="assets/depoimentos/hero-4.jpg" loading="lazy" alt="" width="38" height="38" />
+          <img src="assets/depoimentos/hero-5.jpg" loading="lazy" alt="" width="38" height="38" />
+        </div>
+        <span class="hero-social-label">Mais de 1.000 marceneiros!</span>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ============ 2. VITRINE DE DESEJO — modelos 3D reais, sob demanda ============ -->
+<section class="vitrine">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">O que tem dentro</span>
+      <h2>Não é desenho. É o <span class="hl">modelo 3D real</span> que vem em cada projeto</h2>
+      <div class="rule"></div>
+      <p>Toque no botão e gire o móvel na tela — é a mesma visualização que abre
+         dentro de cada uma das 50 fichas técnicas.</p>
+    </div>
+
+    <div class="grid-desire grid-desire--3d">
+
+      <div class="model-card reveal" data-modelo="torre-alta-vertical">
+        <div class="model-stage">
+          <img class="model-thumb" src="assets/modelos3d/thumb/torre-alta-vertical.webp" loading="lazy"
+               alt="Render 3D da Torre Alta Vertical com poste de sisal e 3 plataformas" />
+          <button class="model-cta" type="button" data-abrir-3d>
+            <span class="model-cta-ic">▶</span> Ver em 3D
+          </button>
+        </div>
+        <span class="verse">O carro-chefe</span>
+        <h3>Torre Alta Vertical</h3>
+        <p>Poste de sisal do chão ao teto com 3 plataformas de descanso.
+           Duas chapas de MDF viram um móvel que você anuncia por várias
+           vezes o custo do material.</p>
+      </div>
+
+      <div class="model-card reveal delay-1" data-modelo="nicho-tunel-entrada-angulo">
+        <div class="model-stage">
+          <img class="model-thumb" src="assets/modelos3d/thumb/nicho-tunel-entrada-angulo.webp" loading="lazy"
+               alt="Render 3D do Nicho Túnel com entrada em ângulo nas duas laterais" />
+          <button class="model-cta" type="button" data-abrir-3d>
+            <span class="model-cta-ic">▶</span> Ver em 3D
+          </button>
+        </div>
+        <span class="verse">Forma que chama atenção</span>
+        <h3>Nicho Túnel com Entrada em Ângulo</h3>
+        <p>Aberturas triangulares nos dois lados em vez do túnel reto de
+           sempre — o tipo de peça que já parece de loja de decoração.</p>
+      </div>
+
+      <div class="model-card reveal delay-2" data-modelo="casinha-suspensa-telhado">
+        <div class="model-stage">
+          <img class="model-thumb" src="assets/modelos3d/thumb/casinha-suspensa-telhado.webp" loading="lazy"
+               alt="Render 3D da Casinha Suspensa com telhado de duas águas" />
+          <button class="model-cta" type="button" data-abrir-3d>
+            <span class="model-cta-ic">▶</span> Ver em 3D
+          </button>
+        </div>
+        <span class="verse">Aparência de móvel caro</span>
+        <h3>Casinha Suspensa com Telhado</h3>
+        <p>Telhado de duas águas, entrada em arco — o tipo de peça que
+           já parece de vitrine de loja de decoração pet.</p>
+      </div>
+
+      <div class="model-card reveal delay-2" data-modelo="arvore-compacta-2-niveis">
+        <div class="model-stage">
+          <img class="model-thumb" src="assets/modelos3d/thumb/arvore-compacta-2-niveis.webp" loading="lazy"
+               alt="Render 3D da Árvore Compacta de 2 Níveis com poste de sisal" />
+          <button class="model-cta" type="button" data-abrir-3d>
+            <span class="model-cta-ic">▶</span> Ver em 3D
+          </button>
+        </div>
+        <span class="verse">Peça de entrada</span>
+        <h3>Árvore Compacta de 2 Níveis</h3>
+        <p>Menor que a torre alta, mais barata de cortar — o primeiro
+           móvel que o cliente compra antes de pedir o maior.</p>
+      </div>
+
+    </div>
+
+    <div class="desire-strip reveal">
+      <span class="ds-icon">✦ ✦ ✦</span>
+      <p class="ds-text">
+        São <strong>50 projetos</strong> em <strong>5 categorias</strong> — ou seja,
+        <span class="ds-underline">50 produtos diferentes</span> que você pode anunciar
+        sem desenhar nada do zero.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. COMPARATIVO ============ -->
+<section class="compare">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">A diferença que aparece na serra</span>
+      <h2>Copiar foto da internet é uma coisa.<br />Ter o plano de corte é outra.</h2>
+      <div class="rule"></div>
+      <p>Você já sabe cortar. O que custa caro é descobrir a medida errada
+         depois que a chapa já foi pro esquadro.</p>
+    </div>
+
+    <div class="compare-grid">
+
+      <div class="compare-col bad reveal">
+        <span class="tag">Do jeito de sempre</span>
+        <h3>Tirando medida de imagem do Pinterest</h3>
+        <ul>
+          <li><span class="ic">✕</span> <span class="txt">Medida chutada no olho pela foto</span></li>
+          <li><span class="ic">✕</span> <span class="txt">A espessura do MDF não foi descontada</span></li>
+          <li><span class="ic">✕</span> <span class="txt">Peça de 35 cm fecha com 38,6 cm</span></li>
+          <li><span class="ic">✕</span> <span class="txt">Chapa perdida e corte refeito</span></li>
+          <li><span class="ic">✕</span> <span class="txt">Horas desenhando antes de vender</span></li>
+        </ul>
+      </div>
+
+      <div class="compare-col good reveal delay-1">
+        <span class="tag">Com o catálogo</span>
+        <h3>Abrindo a ficha e indo direto pra bancada</h3>
+        <ul>
+          <li><span class="ic">✓</span> <span class="txt">Medida <b>calculada por código</b>, peça a peça</span></li>
+          <li><span class="ic">✓</span> <span class="txt">Espessura já <b>descontada nos encontros</b></span></li>
+          <li><span class="ic">✓</span> <span class="txt">O que está na lista é o que <b>fecha na serra</b></span></li>
+          <li><span class="ic">✓</span> <span class="txt">Plano de chapa com <b>aproveitamento</b> calculado</span></li>
+          <li><span class="ic">✓</span> <span class="txt">Escolheu o projeto, <b>já vai cortar</b></span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. VEJA POR DENTRO ============ -->
+<section class="inside">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Veja por dentro</span>
+      <h2>Renders <span class="hl">3D reais</span> de parte do catálogo</h2>
+      <div class="rule"></div>
+      <p>Os 50 projetos são organizados por necessidade do gato — cada um
+         com modelo 3D real, não desenho de referência.</p>
+    </div>
+
+    <div class="cat-marquee reveal">
+      <div class="cat-row">
+        <div class="cat-track cat-left">
+          <span class="cat-badge cat-badge--destaque">Torre Alta Vertical</span>
+          <span class="cat-badge">Degraus Escalonados de Parede</span>
+          <span class="cat-badge">Ponte Suspensa de Ripas com Corda</span>
+          <span class="cat-badge cat-badge--destaque">Nicho Túnel com Entrada em Ângulo</span>
+          <span class="cat-badge">Painel Arranhador de Canto</span>
+          <span class="cat-badge">Poste Arranhador de Chão</span>
+          <span class="cat-badge">Mirante de Janela</span>
+          <span class="cat-badge">Escada em Zigue-Zague de Parede</span>
+          <!-- duplicado para o loop não emendar -->
+          <span class="cat-badge cat-badge--destaque">Torre Alta Vertical</span>
+          <span class="cat-badge">Degraus Escalonados de Parede</span>
+          <span class="cat-badge">Ponte Suspensa de Ripas com Corda</span>
+          <span class="cat-badge cat-badge--destaque">Nicho Túnel com Entrada em Ângulo</span>
+          <span class="cat-badge">Painel Arranhador de Canto</span>
+          <span class="cat-badge">Poste Arranhador de Chão</span>
+          <span class="cat-badge">Mirante de Janela</span>
+          <span class="cat-badge">Escada em Zigue-Zague de Parede</span>
+        </div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-track cat-right">
+          <span class="cat-badge cat-badge--destaque">Casinha Suspensa com Telhado</span>
+          <span class="cat-badge">Cama Concha com Laterais Retas</span>
+          <span class="cat-badge">Comedouro Elevado Duplo</span>
+          <span class="cat-badge">Protetor de Canto de Sofá em Sisal</span>
+          <span class="cat-badge cat-badge--destaque">Árvore Compacta de 2 Níveis</span>
+          <span class="cat-badge">Rede Suspensa de Parede</span>
+          <span class="cat-badge">Poste de Ligação entre Dois Níveis</span>
+          <span class="cat-badge">+ 35 outros projetos</span>
+          <!-- duplicado para o loop não emendar -->
+          <span class="cat-badge cat-badge--destaque">Casinha Suspensa com Telhado</span>
+          <span class="cat-badge">Cama Concha com Laterais Retas</span>
+          <span class="cat-badge">Comedouro Elevado Duplo</span>
+          <span class="cat-badge">Protetor de Canto de Sofá em Sisal</span>
+          <span class="cat-badge cat-badge--destaque">Árvore Compacta de 2 Níveis</span>
+          <span class="cat-badge">Rede Suspensa de Parede</span>
+          <span class="cat-badge">Poste de Ligação entre Dois Níveis</span>
+          <span class="cat-badge">+ 35 outros projetos</span>
+        </div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-track cat-left">
+          <span class="cat-badge">Escada de Canto</span>
+          <span class="cat-badge">Passarela com Recorte Reto</span>
+          <span class="cat-badge">Rampa de Acesso</span>
+          <span class="cat-badge cat-badge--destaque">Árvore Média de 3 Níveis</span>
+          <span class="cat-badge">Painel Modular de Escalada</span>
+          <span class="cat-badge">Prateleira de Descanso com Borda</span>
+          <span class="cat-badge">Ponte Flexível de Tecido Reforçado</span>
+          <span class="cat-badge">Poste Arranhador com Plataforma</span>
+          <!-- duplicado para o loop não emendar -->
+          <span class="cat-badge">Escada de Canto</span>
+          <span class="cat-badge">Passarela com Recorte Reto</span>
+          <span class="cat-badge">Rampa de Acesso</span>
+          <span class="cat-badge cat-badge--destaque">Árvore Média de 3 Níveis</span>
+          <span class="cat-badge">Painel Modular de Escalada</span>
+          <span class="cat-badge">Prateleira de Descanso com Borda</span>
+          <span class="cat-badge">Ponte Flexível de Tecido Reforçado</span>
+          <span class="cat-badge">Poste Arranhador com Plataforma</span>
+        </div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-track cat-right">
+          <span class="cat-badge">Arranhador Inclinado tipo Cunha</span>
+          <span class="cat-badge">Comedouro Elevado Simples</span>
+          <span class="cat-badge">Estação Compacta com Armazenamento</span>
+          <span class="cat-badge cat-badge--destaque">Nicho Túnel com Saída no Topo</span>
+          <span class="cat-badge">Nicho Aberto de Canto</span>
+          <span class="cat-badge">Prateleira de Descanso Simples</span>
+          <span class="cat-badge">Cama Suspensa em Tecido Tenso</span>
+          <span class="cat-badge">Playground Família</span>
+          <!-- duplicado para o loop não emendar -->
+          <span class="cat-badge">Arranhador Inclinado tipo Cunha</span>
+          <span class="cat-badge">Comedouro Elevado Simples</span>
+          <span class="cat-badge">Estação Compacta com Armazenamento</span>
+          <span class="cat-badge cat-badge--destaque">Nicho Túnel com Saída no Topo</span>
+          <span class="cat-badge">Nicho Aberto de Canto</span>
+          <span class="cat-badge">Prateleira de Descanso Simples</span>
+          <span class="cat-badge">Cama Suspensa em Tecido Tenso</span>
+          <span class="cat-badge">Playground Família</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-marquee reveal">
+      <div class="pm-row">
+        <div class="pm-track pm-left">
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/A1-degraus-escalonados-4x3.webp" loading="lazy" alt="Projeto de degraus escalonados de parede para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/A4-passarela-reta-4x3.webp" loading="lazy" alt="Projeto de passarela reta para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/B1-ponte-ripas-4x3.webp" loading="lazy" alt="Projeto de ponte de ripas para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/C1-poste-ligacao-4x3.webp" loading="lazy" alt="Projeto de poste de ligação para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/D1-painel-escalada-4x3.webp" loading="lazy" alt="Projeto de painel de escalada para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/A1-degraus-escalonados-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/A4-passarela-reta-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/B1-ponte-ripas-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/C1-poste-ligacao-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/D1-painel-escalada-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+        </div>
+      </div>
+      <div class="pm-row">
+        <div class="pm-track pm-right">
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/022-casinha-suspensa-4x3.webp" loading="lazy" alt="Projeto de casinha suspensa para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/E4-nicho-tunel-4x3.webp" loading="lazy" alt="Projeto de nicho túnel para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/G3-mirante-janela-4x3.webp" loading="lazy" alt="Projeto de mirante de janela para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/H3-cama-concha-4x3.webp" loading="lazy" alt="Projeto de cama concha para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/J1-protetor-canto-sofa-4x3.webp" loading="lazy" alt="Projeto de protetor de canto de sofá para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/022-casinha-suspensa-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/E4-nicho-tunel-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/G3-mirante-janela-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/H3-cama-concha-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/J1-protetor-canto-sofa-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+        </div>
+      </div>
+      <div class="pm-row">
+        <div class="pm-track pm-left pm-slow">
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/033-poste-arranhador-4x3.webp" loading="lazy" alt="Projeto de poste arranhador para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/032-painel-canto-4x3.webp" loading="lazy" alt="Projeto de painel arranhador de canto para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/039-arvore-compacta-4x3.webp" loading="lazy" alt="Projeto de árvore compacta para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/040-arvore-3-niveis-4x3.webp" loading="lazy" alt="Projeto de árvore de três níveis para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/L2-comedouro-duplo-4x3.webp" loading="lazy" alt="Projeto de comedouro duplo para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/033-poste-arranhador-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/032-painel-canto-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/039-arvore-compacta-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/040-arvore-3-niveis-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/L2-comedouro-duplo-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+
+    <div class="mid-cta reveal delay-2">
+      <span class="mc-chip">✦ Você viu só algumas fichas</span>
+      <p class="mc-title">Lá dentro são <strong>50 projetos completos</strong>, cada um com lista de corte e modelo 3D.</p>
+      <p class="small">Escolhe um, corta hoje, fotografa e anuncia. Depois volta e escolhe o próximo.</p>
+      <a href="#comprar" class="btn btn-lg">Quero o catálogo completo <span class="arrow">➔</span></a>
+      <div class="mc-facts">
+        <span><b>50</b> projetos</span>
+        <span><b>5</b> categorias</span>
+        <span><b>3D</b> no celular e no computador</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. BÔNUS ============ -->
+<section class="bonus">
+  <div class="container">
+    <div class="section-head dark-head reveal">
+      <span class="eyebrow">Vai junto</span>
+      <h2>4 bônus para você <span class="hl">vender</span>, não só cortar</h2>
+      <div class="rule"></div>
+      <p>Saber fazer o móvel é metade. A outra metade é precificar certo
+         e escrever o anúncio sem travar.</p>
+    </div>
+
+    <div class="grid-bonus">
+
+      <div class="bonus-card reveal">
+        <div class="cover">
+          <img src="assets/mockups/bonus-smartphone/calculadora-preco-lucro-transparent.webp" loading="lazy"
+               alt="Bônus: calculadora de preço e lucro — mockup" />
+        </div>
+        <h3>Calculadora de Preço e Lucro</h3>
+        <p>Você põe o custo da chapa, do sisal e a sua hora de trabalho. Ela devolve
+           quanto cobrar e quanto vai sobrar de lucro — sem vender no prejuízo.</p>
+        <div class="bonus-price">
+          <s>R$ 47</s>
+          <span class="free">VAI SAIR DE GRAÇA</span>
+        </div>
+      </div>
+
+      <div class="bonus-card reveal delay-1">
+        <div class="cover">
+          <img src="assets/mockups/bonus-smartphone/gerador-orcamento-transparent.webp" loading="lazy"
+               alt="Bônus: gerador de orçamento profissional — mockup" />
+        </div>
+        <h3>Gerador de Orçamento</h3>
+        <p>Preenche o projeto e o prazo e sai um orçamento pronto pra mandar pro
+           cliente — com a cara de quem já vende há anos, não de quem tá começando.</p>
+        <div class="bonus-price">
+          <s>R$ 39</s>
+          <span class="free">VAI SAIR DE GRAÇA</span>
+        </div>
+      </div>
+
+      <div class="bonus-card reveal delay-1">
+        <div class="cover">
+          <img src="assets/mockups/bonus-smartphone/catalogo-interativo-transparent.webp" loading="lazy"
+               alt="Bônus: catálogo interativo para mostrar ao cliente — mockup" />
+        </div>
+        <h3>Catálogo Interativo</h3>
+        <p>Uma vitrine com os 50 modelos pra você mandar no WhatsApp — o cliente
+           folheia, escolhe o que quer e você já sabe o que vai cortar.</p>
+        <div class="bonus-price">
+          <s>R$ 37</s>
+          <span class="free">VAI SAIR DE GRAÇA</span>
+        </div>
+      </div>
+
+      <div class="bonus-card reveal delay-2">
+        <div class="cover">
+          <img src="assets/mockups/bonus-smartphone/lista-compras-iniciantes-transparent.webp" loading="lazy"
+               alt="Bônus: lista de compras para marceneiros iniciantes — mockup" />
+        </div>
+        <h3>Lista de Compras Para Iniciantes</h3>
+        <p>Ferramentas, materiais e itens básicos para quem está começando agora —
+           pra não gastar em coisa que ainda não precisa, nem faltar o essencial.</p>
+        <div class="bonus-price">
+          <s>R$ 29</s>
+          <span class="free">VAI SAIR DE GRAÇA</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bonus-final reveal">
+      <span class="bonus-final-badge">🎁 Os 4 bônus juntos</span>
+      <p class="bonus-sum">
+        Sozinhos sairiam por <s class="was">R$ 152</s> —
+        hoje eles vão junto com o catálogo, <strong>totalmente de graça</strong>.
+      </p>
+      <a href="#comprar" class="btn btn-buy btn-lg">Quero o catálogo + os 4 bônus <span class="arrow">➔</span></a>
+      <span class="bonus-final-note">✦ Os bônus fazem parte da oferta atual desta página.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. DEPOIMENTOS ============ -->
+<section class="testi">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Quem já usa</span>
+      <h2>O que dizem os <span class="hl">marceneiros</span></h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="grid-testi">
+
+      <div class="testi-card reveal">
+        <div class="testi-head">
+          <img class="avatar" src="assets/depoimentos/dep-1.jpg" loading="lazy" alt="Foto de Adriano Mendes" />
+          <span class="name">Adriano Mendes</span>
+          <span class="meta"><span class="verified">✔ Verificado</span> · Contagem/MG</span>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="quote">Peguei o nicho passante e o arranhador de parede no mesmo dia.
+          <strong>Saiu tudo de uma chapa só</strong> e ainda sobrou pedaço. Anunciei no
+          grupo do bairro e vendeu três no fim de semana.</p>
+      </div>
+
+      <div class="testi-card reveal delay-1">
+        <div class="testi-head">
+          <img class="avatar" src="assets/depoimentos/dep-2.jpg" loading="lazy" alt="Foto de Rogério Salles" />
+          <span class="name">Rogério Salles</span>
+          <span class="meta"><span class="verified">✔ Verificado</span> · Sorocaba/SP</span>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="quote">Já tinha tentado copiar de foto e errei a medida por causa da
+          espessura. Aqui <strong>a medida já vem descontada</strong>. Montei a torre
+          sem retrabalho nenhum, encaixou de primeira.</p>
+      </div>
+
+      <div class="testi-card reveal delay-2">
+        <div class="testi-head">
+          <img class="avatar" src="assets/depoimentos/dep-3.jpg" loading="lazy" alt="Foto de Wesley Aparecido" />
+          <span class="name">Wesley Aparecido</span>
+          <span class="meta"><span class="verified">✔ Verificado</span> · Curitiba/PR</span>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="quote">Eu só fazia planejado e guarda-roupa. <strong>Móvel pet virou
+          minha linha nova</strong> — é peça pequena, monta rápido e o pessoal paga bem
+          porque acha bonito na foto.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. OFERTA ============ -->
+<section class="offer" id="comprar">
+  <div class="container">
+    <div class="section-head dark-head reveal">
+      <span class="eyebrow">A oferta</span>
+      <h2>Custa <span class="hl">menos que uma chapa de MDF</span></h2>
+      <div class="rule"></div>
+      <p>E um único móvel vendido já paga o catálogo muitas vezes.</p>
+    </div>
+
+    <div class="offer-grid">
+
+      <!-- BÁSICO (decoy) -->
+      <div class="plan basic reveal">
+        <h3>Só o catálogo</h3>
+        <p class="psub">Os 50 projetos, sem os bônus de venda.</p>
+        <div class="price">R$ 22,90</div>
+        <ul>
+          <li class="yes"><span class="ic">✓</span> <span class="txt">Os 50 projetos completos</span></li>
+          <li class="yes"><span class="ic">✓</span> <span class="txt">Lista de corte e modelo 3D</span></li>
+          <li class="no"><span class="ic">✕</span> <span class="txt">Calculadora de Preço e Lucro</span></li>
+          <li class="no"><span class="ic">✕</span> <span class="txt">Gerador de Orçamento</span></li>
+          <li class="no"><span class="ic">✕</span> <span class="txt">Catálogo Interativo</span></li>
+          <li class="no"><span class="ic">✕</span> <span class="txt">Lista de Compras Para Iniciantes</span></li>
+        </ul>
+        <button class="btn btn-ghost btn-block" id="abrirDownsell" type="button">Quero só o catálogo</button>
+      </div>
+
+      <!-- COMPLETO (VIP) -->
+      <div class="plan vip reveal delay-1">
+        <span class="ribbon">⭐ O Mais Escolhido</span>
+
+        <h3>Catálogo completo + 4 bônus</h3>
+        <p class="psub">Tudo o que você precisa pra cortar e pra vender.</p>
+
+        <img class="plan-mockup" src="assets/mockups/hero-header-v2.webp" loading="lazy"
+             alt="Pacote completo: biblioteca de projetos 3D no notebook e celular com fichas técnicas" />
+
+        <div class="price-row">
+          <span class="anchor">De <s>R$ 152</s> por apenas</span>
+          <span class="price">R$ 29,90</span>
+        </div>
+        <div class="installment">ou <b>12x de R$ 3,01</b> · pagamento único no PIX</div>
+
+        <ul>
+          <li class="yes"><span class="ic">✓</span> <span class="txt">Os <strong>50 projetos</strong> em 5 categorias</span></li>
+          <li class="yes"><span class="ic">✓</span> <span class="txt">Lista de corte com <strong>medida calculada</strong></span></li>
+          <li class="yes"><span class="ic">✓</span> <span class="txt">Modelo <strong>3D navegável</strong> com vista explodida</span></li>
+          <li class="yes"><span class="ic">✓</span> <span class="txt">Sequência de montagem passo a passo</span></li>
+          <li class="yes"><span class="ic">✓</span> <span class="txt"><strong>Bônus:</strong> Calculadora de Preço e Lucro</span></li>
+          <li class="yes"><span class="ic">✓</span> <span class="txt"><strong>Bônus:</strong> Gerador de Orçamento</span></li>
+          <li class="yes"><span class="ic">✓</span> <span class="txt"><strong>Bônus:</strong> Catálogo Interativo</span></li>
+          <li class="yes"><span class="ic">✓</span> <span class="txt"><strong>Bônus:</strong> Lista de Compras Para Iniciantes</span></li>
+          <li class="yes"><span class="ic">✓</span> <span class="txt">Acesso imediato e vitalício</span></li>
+        </ul>
+
+        <a href="#" class="btn btn-buy btn-lg btn-block" data-checkout="vip">
+          Quero o catálogo completo <span class="arrow">➔</span>
+        </a>
+
+        <div class="offer-secure">
+          <span>🔒 Compra 100% segura</span> <span>•</span>
+          <span>🛡️ Garantia de 15 dias</span> <span>•</span>
+          <span>⚡ Acesso imediato</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. GARANTIA ============ -->
+<section class="guarantee">
+  <div class="container">
+    <div class="guarantee-box reveal">
+      <img class="seal-days-img" src="assets/garantia-15-dias.webp"
+           alt="Selo de garantia de 15 dias" loading="lazy" width="250" height="250" />
+      <h2>Abra, confira as medidas e só depois decida</h2>
+      <p>Entre, abra os projetos, confira a lista de corte e veja se fecha com o
+         jeito que você trabalha. Se você achar que não serve pra sua oficina,
+         é só me mandar uma mensagem em até <strong>15 dias</strong> que eu devolvo
+         todo o seu dinheiro — sem perguntas, sem burocracia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. FAQ ============ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Dúvidas</span>
+      <h2>Perguntas que todo marceneiro faz</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>Como eu recebo o material? <span class="plus">+</span></summary>
+        <div class="answer">Assim que o pagamento é aprovado, você recebe o acesso no
+          WhatsApp e no e-mail. É uma área online — abre no celular da oficina e no
+          computador, sem precisar instalar nada.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Preciso saber mexer em programa de projeto? <span class="plus">+</span></summary>
+        <div class="answer">Não. Você não desenha nada. Abre o projeto, lê a lista de
+          peças com as medidas já prontas e leva pra serra. O 3D serve só pra você
+          entender a montagem e mostrar pro cliente.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>As medidas servem pra qualquer espessura de MDF? <span class="plus">+</span></summary>
+        <div class="answer">O padrão dos projetos é MDF de 18 mm, que é o mais comum
+          na marcenaria. As medidas já consideram essa espessura nos encontros das
+          peças — é justamente isso que faz o corte fechar.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Posso vender os móveis que eu fizer? <span class="plus">+</span></summary>
+        <div class="answer">Pode, sim — é exatamente pra isso que o catálogo existe.
+          Você produz e vende os móveis à vontade. O que não pode é revender ou
+          distribuir o catálogo de projetos em si.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>E se eu não gostar? <span class="plus">+</span></summary>
+        <div class="answer">Você tem 15 dias para pedir o reembolso total. Basta uma
+          mensagem, sem precisar justificar. O risco fica todo comigo.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. CTA FINAL ============ -->
+<section class="final">
+  <div class="container narrow">
+    <span class="eyebrow reveal">Última chamada</span>
+    <h2 class="reveal delay-1">Enquanto o concorrente ainda <span class="hl">desenha o primeiro</span>, você já anunciou cinco</h2>
+    <p class="urg reveal delay-1">⏳ Todo fim de semana sem catálogo é orçamento que você não fez</p>
+    <div class="reveal delay-2">
+      <a href="#comprar" class="btn btn-gold btn-lg">Quero começar por R$ 29,90 <span class="arrow">➔</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12. FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="brand">50 Projetos de Móveis 3D para Gatos</div>
+    <p class="verse">Medida que fecha na serra vale mais que desenho bonito.</p>
+    <p class="copy">© 2026 — Todos os direitos reservados.</p>
+    <p class="disclaimer">
+      Este é um produto digital de projetos de marcenaria. Os resultados
+      financeiros citados dependem da execução, do mercado e do esforço de cada
+      profissional — não há garantia de faturamento. A montagem, a fixação e a
+      segurança do móvel final são responsabilidade de quem executa o projeto.
+      Este site não tem qualquer vínculo com Facebook, Instagram ou Google.
+    </p>
+  </div>
+</footer>
+
+<!-- ============ MODAL DOWNSELL ============ -->
+<div class="downsell-overlay" id="downsellOverlay" role="dialog" aria-modal="true" aria-labelledby="downsellTitulo">
+  <div class="downsell-modal">
+    <button class="close" id="fecharDownsell" type="button" aria-label="Fechar">×</button>
+    <p class="dtag">Espere! Uma oferta só pra você</p>
+    <h3 id="downsellTitulo">Leva o pacote completo por menos</h3>
+    <p>Sem os 4 bônus você corta, mas não sai com o preço pronto, o orçamento pronto
+       nem o catálogo pra mostrar ao cliente. Leva tudo — catálogo + os 4 bônus — com desconto:</p>
+    <img class="dmockup" src="assets/mockups/hero-header-v2.webp" loading="lazy"
+         alt="Pacote completo com biblioteca de projetos no notebook e celular" />
+    <p class="dprice"><s>R$ 29,90</s> R$ 25,90</p>
+    <a href="#" class="btn btn-buy btn-block" data-checkout="downsell">Quero o pacote completo ➔</a>
+    <a href="#" class="refuse" id="recusarDownsell" data-checkout="basico">Não, quero seguir só com o catálogo</a>
+  </div>
+</div>
+
+<script>
+/* 1. SCROLL-REVEAL */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window)){
+    for(var k=0;k<els.length;k++) els[k].classList.add('in');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold:.14, rootMargin:'0px 0px -8% 0px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+/* 2. MODAL DOWNSELL — abre no clique do plano básico; fecha por X, clique-fora e ESC */
+(function(){
+  var open    = document.getElementById('abrirDownsell');
+  var overlay = document.getElementById('downsellOverlay');
+  var close   = document.getElementById('fecharDownsell');
+  if(!open || !overlay) return;
+  function show(e){ if(e) e.preventDefault(); overlay.classList.add('open');
+                    document.body.style.overflow='hidden'; }
+  function hide(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
+  open.addEventListener('click', show);
+  if(close) close.addEventListener('click', hide);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) hide(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') hide(); });
+})();
+
+/* 3. CHECKOUT + REPASSE DE UTM
+   O gateway grava utm_source, utm_medium, utm_campaign, utm_term, utm_content e
+   sck a partir da QUERY STRING do link de checkout. O pixel da UTMify NÃO faz
+   esse repasse — sem este bloco, toda venda entra como tráfego direto. */
+(function(){
+  var LINKS = {
+    vip:      'https://pay.cakto.com.br/35dieni',
+    downsell: 'https://pay.cakto.com.br/g64q8jg',
+    basico:   'https://pay.cakto.com.br/3ceh5ve'
+  };
+
+  var RASTREIO = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','sck',
+                  'fbclid','gclid','ttclid'];
+  var GUARDA = 'rastreio_50-projetos-3d-gatos';
+
+  function coletar(){
+    var vieram = {}, q = new URLSearchParams(window.location.search);
+    RASTREIO.forEach(function(k){ var v = q.get(k); if(v) vieram[k] = v; });
+    if(Object.keys(vieram).length){
+      try { sessionStorage.setItem(GUARDA, JSON.stringify(vieram)); } catch(e){}
+      return vieram;
+    }
+    try { return JSON.parse(sessionStorage.getItem(GUARDA)) || {}; } catch(e){ return {}; }
+  }
+
+  var rastreio = coletar();
+
+  function comRastreio(link){
+    var chaves = Object.keys(rastreio);
+    if(!chaves.length) return link;
+    try {
+      var u = new URL(link);
+      chaves.forEach(function(k){ u.searchParams.set(k, rastreio[k]); });
+      return u.toString();
+    } catch(e){ return link; }
+  }
+
+  var btns = document.querySelectorAll('[data-checkout]');
+  if(!btns.length) return;
+  btns.forEach(function(b){
+    var key = b.getAttribute('data-checkout');
+    if(LINKS[key]) b.setAttribute('href', comRastreio(LINKS[key]));
+  });
+})();
+
+/* 4. TOPBAR MARQUEE */
+(function(){
+  var track = document.getElementById('topbarTrack');
+  if(!track) return;
+  var seq = track.querySelector('.topbar-seq');
+  if(!seq) return;
+  track.appendChild(seq.cloneNode(true));
+})();
+
+/* 5. SCROLL-DRIVEN — faixa de diferencial */
+(function(){
+  var strip = document.querySelector('.desire-strip');
+  if(!strip) return;
+  var ticking = false;
+  function update(){
+    var r  = strip.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var mid = r.top + r.height/2;
+    var start = vh * 0.85, end = vh * 0.5;
+    var p = (start - mid) / (start - end);
+    p = Math.max(0, Math.min(1, p));
+    strip.style.setProperty('--scroll', p.toFixed(4));
+    ticking = false;
+  }
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', onScroll, { passive:true });
+  update();
+})();
+</script>
+
+<!-- 6. VISUALIZADOR 3D SOB DEMANDA — em módulo à parte porque o import()
+     dinâmico do GLTFLoader/OrbitControls só resolve o bare specifier "three"
+     (via o importmap declarado no topo do documento) dentro de um
+     script-módulo. Three.js E o modelo .glb só entram na rede no primeiro
+     clique em "Ver em 3D" — nada disso pesa no carregamento inicial da
+     página. Os 3 arquivos .glb são os MESMOS modelos 3D reais gerados pela
+     IA (Tripo) para a área de membros, só que recomprimidos com Draco +
+     WebP (6–7 MB → 0,6–1,3 MB) para caberem numa página de vendas. Cada
+     card tem sua própria cena/câmera/OrbitControls; ao alternar, a cena
+     anterior é descartada (dispose) pra não acumular contexto WebGL. -->
+<script type="module">
+(function(){
+  var cards = document.querySelectorAll('.model-card[data-modelo]');
+  if(!cards.length) return;
+
+  /* Ficam em public/modelos3d/ (não em assets/) de propósito: o Vite só
+     processa/copia arquivos referenciados em atributos HTML, e esta URL só
+     existe dentro de uma string JS — public/ é copiada pro build sem
+     processar, então esta é a única forma confiável do .glb chegar ao dist. */
+  var MODELOS = {
+    'torre-alta-vertical':        'modelos3d/torre-alta-vertical.glb',
+    'nicho-tunel-entrada-angulo': 'modelos3d/nicho-tunel-entrada-angulo.glb',
+    'casinha-suspensa-telhado':   'modelos3d/casinha-suspensa-telhado.glb',
+    'arvore-compacta-2-niveis':   'modelos3d/arvore-compacta-2-niveis.glb'
+  };
+
+  /* 'three' resolve pelo importmap do topo do documento; as versões do
+     GLTFLoader e do OrbitControls precisam bater com a do importmap, senão
+     o bare specifier interno deles aponta pra uma versão diferente do
+     Three e a cena não desenha nada. */
+  var GLTF_URL  = 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+  var DRACO_URL = 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/DRACOLoader.js';
+  var ORBIT_URL = 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+  // decodificador wasm do Draco: os .glb foram recomprimidos com
+  // `gltf-transform optimize --compress draco` (6–7 MB → 0,6–1,3 MB) —
+  // sem apontar pra esta pasta o GLTFLoader recusa o arquivo.
+  var DRACO_DECODER = 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/';
+  var threeMod = null; // cache: baixa a engine uma vez só, reusa em todos os cards
+
+  function carregarThree(){
+    if(threeMod) return threeMod;
+    threeMod = Promise.all([
+      import(/* @vite-ignore */ 'three'),
+      import(/* @vite-ignore */ GLTF_URL),
+      import(/* @vite-ignore */ DRACO_URL),
+      import(/* @vite-ignore */ ORBIT_URL)
+    ]).then(function(mods){
+      return { THREE: mods[0], GLTFLoader: mods[1].GLTFLoader, DRACOLoader: mods[2].DRACOLoader, OrbitControls: mods[3].OrbitControls };
+    });
+    return threeMod;
+  }
+
+  function montarCena(card, THREE, GLTFLoader, DRACOLoader, OrbitControls, onProgress){
+    var url = MODELOS[card.getAttribute('data-modelo')];
+    var stage = card.querySelector('.model-stage');
+    var canvas = document.createElement('canvas');
+    canvas.className = 'model-canvas';
+    stage.appendChild(canvas);
+
+    var w = stage.clientWidth, h = stage.clientHeight;
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias:true, alpha:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(w, h);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(35, w / h, 0.01, 100);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 1.1));
+    var key = new THREE.DirectionalLight(0xffffff, 1.4);
+    key.position.set(3, 5, 3);
+    scene.add(key);
+    var fill = new THREE.DirectionalLight(0xffffff, 0.5);
+    fill.position.set(-4, 2, -2);
+    scene.add(fill);
+
+    var rodando = true;
+    var controls = null;
+    var draco = new DRACOLoader();
+    draco.setDecoderPath(DRACO_DECODER);
+    var loader = new GLTFLoader();
+    loader.setDRACOLoader(draco);
+
+    loader.load(url, function(gltf){
+      var modelo = gltf.scene;
+      scene.add(modelo);
+
+      // Enquadra a câmera a partir do tamanho REAL do modelo carregado —
+      // nunca assumir escala fixa, cada .glb do Tripo vem em proporção própria.
+      var caixa = new THREE.Box3().setFromObject(modelo);
+      var centro = caixa.getCenter(new THREE.Vector3());
+      var tamanho = caixa.getSize(new THREE.Vector3());
+      var raio = Math.max(tamanho.x, tamanho.y, tamanho.z) || 1;
+
+      modelo.position.sub(centro); // centraliza o modelo na origem
+
+      var distancia = raio * 1.7;
+      camera.position.set(distancia * 0.72, distancia * 0.52, distancia * 0.9);
+      camera.near = raio / 100;
+      camera.far = raio * 40;
+      camera.updateProjectionMatrix();
+
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
+      controls.minDistance = raio * 0.6;
+      controls.maxDistance = raio * 3.4;
+      controls.target.set(0, 0, 0);
+      controls.update();
+
+      card.classList.remove('is-loading');
+      card.classList.add('is-open');
+      var btn = card.querySelector('[data-abrir-3d]');
+      if(btn) btn.innerHTML = '<span class="model-cta-ic">✕</span> Fechar';
+    }, onProgress, function(erro){
+      console.error('Falha ao carregar o modelo 3D:', erro);
+      card.classList.remove('is-loading');
+      var btn = card.querySelector('[data-abrir-3d]');
+      if(btn) btn.innerHTML = '<span class="model-cta-ic">⚠</span> Tentar de novo';
+    });
+
+    function loop(){
+      if(!rodando) return;
+      if(controls) controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    function onResize(){
+      var nw = stage.clientWidth, nh = stage.clientHeight;
+      if(!nw || !nh) return;
+      camera.aspect = nw / nh;
+      camera.updateProjectionMatrix();
+      renderer.setSize(nw, nh);
+    }
+    window.addEventListener('resize', onResize);
+
+    return function destruir(){
+      rodando = false;
+      window.removeEventListener('resize', onResize);
+      if(controls) controls.dispose();
+      scene.traverse(function(obj){
+        if(obj.geometry) obj.geometry.dispose();
+        if(obj.material){
+          var materiais = Array.isArray(obj.material) ? obj.material : [obj.material];
+          materiais.forEach(function(m){
+            for(var chave in m){ if(m[chave] && m[chave].isTexture) m[chave].dispose(); }
+            m.dispose();
+          });
+        }
+      });
+      renderer.dispose();
+      draco.dispose();
+      if(canvas.parentNode) canvas.parentNode.removeChild(canvas);
+    };
+  }
+
+  cards.forEach(function(card){
+    var btn = card.querySelector('[data-abrir-3d]');
+    var thumb = card.querySelector('.model-thumb');
+    var destruirAtual = null;
+
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      if(card.classList.contains('is-open')){
+        // alterna: fecha a cena e volta pra thumbnail
+        if(destruirAtual){ destruirAtual(); destruirAtual = null; }
+        card.classList.remove('is-open');
+        if(thumb) thumb.style.display = '';
+        btn.innerHTML = '<span class="model-cta-ic">▶</span> Ver em 3D';
+        return;
+      }
+
+      card.classList.add('is-loading');
+      btn.innerHTML = '<span class="model-cta-ic">⏳</span> Carregando…';
+      carregarThree().then(function(mod){
+        if(thumb) thumb.style.display = 'none';
+        destruirAtual = montarCena(card, mod.THREE, mod.GLTFLoader, mod.DRACOLoader, mod.OrbitControls, function(evento){
+          if(evento.lengthComputable){
+            var pct = Math.round((evento.loaded / evento.total) * 100);
+            btn.innerHTML = '<span class="model-cta-ic">⏳</span> ' + pct + '%';
+          }
+        });
+      }).catch(function(err){
+        card.classList.remove('is-loading');
+        btn.innerHTML = '<span class="model-cta-ic">⚠</span> Tentar de novo';
+        console.error('Falha ao carregar o visualizador 3D:', err);
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
