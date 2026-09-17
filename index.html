@@ -423,10 +423,13 @@ section{ padding:84px 0; position:relative; }
 }
 .ebook-preview .ep-frame img{ display:block; width:100%; height:auto; }
 .ebook-preview .ep-frame--flip{
-  max-width:720px; aspect-ratio:16/10;
+  max-width:420px; aspect-ratio:0.7067; width:100%;
 }
 .ebook-preview .ep-frame--flip iframe{
   display:block; width:100%; height:100%; border:0;
+}
+@media (max-width:560px){
+  .ebook-preview .ep-frame--flip{ max-width:100%; }
 }
 .ebook-preview .ep-caption{ margin-top:14px; font-size:.92rem; color:var(--text-muted); }
 
@@ -1082,6 +1085,7 @@ footer .copy{ font-size:.82rem; margin-top:18px; }
       <div class="ep-frame ep-frame--flip">
         <iframe src="https://heyzine.com/flip-book/97ac940289.html" loading="lazy"
                 title="Prévia folheável do catálogo 100 Projetos de Móveis 3D para Gatos"
+                class="fp-iframe" allow="clipboard-write" scrolling="no"
                 allowfullscreen frameborder="0"></iframe>
       </div>
       <p class="ep-caption">Folheie a prévia: capa, boas-vindas, como usar e o índice por categorias.</p>
