@@ -1,11 +1,77 @@
 # Contexto — Página de Vendas "100 Projetos de Móveis 3D para Gatos"
 
-> Leia este arquivo inteiro antes de mexer em qualquer coisa. Ele documenta o
-> estado REAL do projeto em 2026-09-15. Se algo aqui divergir do código, o
-> código manda — mas normalmente isso significa que este arquivo ficou
-> desatualizado e deve ser corrigido.
+> ⚠️ **REVERSÃO EM 2026-09-16 — LER ANTES DE QUALQUER OUTRA COISA NESTE
+> ARQUIVO.** A seção abaixo ("O produto", datada de 2026-09-15) dizia que o
+> 3D era o produto principal e que fichas em PDF estavam abandonadas. **Isso
+> foi um erro de direção do usuário e foi revertido no dia seguinte.** A
+> decisão nova, que vale a partir de agora:
+>
+> - **Produto principal: 100 fichas técnicas em PDF** (uma por móvel).
+>   O 3D não gera desejo de compra — o PDF visual é o que o público de
+>   marceneiro/maker realmente quer.
+> - **O acervo 3D vira bônus/complemento** dentro da mesma oferta, não mais
+>   o carro-chefe.
+> - Qualquer trecho abaixo que diga "nunca mais mostrar fichas desenhadas
+>   estáticas" ou equivalente está REVOGADO. Fichas em PDF voltam a ser
+>   produzidas, mostradas e vendidas.
+> - As fichas são produzidas no projeto irmão
+>   `c:\Users\Usuário\Desktop\PROJETOS\PROJETOS 3D MOVEIS PARA GATOS`
+>   (lista completa em `lista-100-fichas.md` lá) — imagem de referência
+>   gerada no Gemini, ficha montada a partir dela. Medida de corte não pode
+>   ser inventada só olhando a imagem: vem de `lib/projetos-tecnicos.ts`
+>   desse projeto irmão.
+> - Antes de editar a Seção 2 ("Vitrine com modelos 3D reais") ou a Seção 4
+>   ("Veja por dentro") desta página com base no texto abaixo, confirmar com
+>   o usuário se elas devem passar a mostrar fichas em PDF em vez de (ou além
+>   de) os GLBs — o texto abaixo ainda descreve o layout **antigo**, focado
+>   em 3D como atração principal, e pode estar desatualizado quanto a isso.
+>
+> O restante deste arquivo (preços, bônus, links de checkout, pixel, UTM,
+> estado da Cakto) **continua valendo normalmente** — a reversão é só sobre
+> qual é o produto/mídia principal (PDF vs. 3D), não sobre preço ou oferta.
+>
+> **Execução da reversão (2026-09-16, mesmo dia):**
+> - Seção 2 ("O que tem dentro", `.vitrine`): mantém a grid dos 4 model-cards
+>   3D, mas o carrossel de imagens lifestyle (`.page-marquee`) foi movido pra
+>   cá — antes do card `.desire-strip` ("100 projetos em 5 categorias").
+> - Seção 4 ("Veja por dentro", `.inside`): ordem agora é headline → badges
+>   (`.cat-marquee`) → prévia (`.ebook-preview`) → carrossel de fichas em PDF
+>   (`.ficha-marquee`, novo). O `.page-marquee` NÃO duplica mais aqui — só
+>   existe na seção 2 agora.
+> - `.ficha-marquee`: 10 fichas técnicas reais copiadas de
+>   `PROJETOS 3D MOVEIS PARA GATOS/public/fichas/grande/*.webp` (geradas por
+>   IA — GPT usando referência do Gemini) para
+>   `assets/fichas-preview/*.webp` nesta página, redimensionadas com
+>   `sharp-cli` (700px, q78, ~85KB cada).
+> - `.ebook-preview`: era uma imagem estática; agora é o **flipbook real**
+>   via iframe embedado (Heyzine), gerado a partir das 5 páginas de abertura
+>   em `PROJETOS 3D MOVEIS PARA GATOS/public/paginas-iniciais/*.png` (capa,
+>   boas-vindas, como usar, índice de categorias, avisos importantes — nenhum
+>   projeto/ficha de conteúdo real entra na prévia, só essas 5).
+>   URL do flipbook: `https://heyzine.com/flip-book/97ac940289.html`.
+>   Gerado via a skill `heyzine-flipbook` (helper `~/.heyzine/heyzine.mjs`,
+>   credenciais em `~/.heyzine/credentials.env`) — **não dá pra editar depois
+>   de gerado**, qualquer ajuste no PDF de prévia exige reconverter e trocar
+>   a URL do iframe de novo.
+> - Badge "+ 35 outros projetos" no `.cat-marquee` estava desatualizado
+>   (resquício de quando eram 50 projetos) — corrigido para "+ 69 outros
+>   projetos" (31 badges nomeados + 69 = 100).
+> - **Pendente**: as 90 fichas restantes (só 10 foram usadas no carrossel de
+>   amostra) e o pipeline de geração das fichas com Gemini+GPT Image ainda
+>   está em estudo pelo usuário — não gerar fichas novas sem pedido explícito.
 
-## O produto
+> Leia este arquivo inteiro antes de mexer em qualquer coisa. Ele documenta o
+> estado REAL do projeto em 2026-09-15 (ver aviso de reversão acima para o
+> que mudou em 2026-09-16). Se algo aqui divergir do código, o código manda —
+> mas normalmente isso significa que este arquivo ficou desatualizado e deve
+> ser corrigido.
+
+## O produto (histórico — 2026-09-15, ver reversão no topo)
+
+Infoproduto de baixo ticket para marceneiros / "maridos de aluguel": 100
+projetos de móveis para gatos. **Em 2026-09-15 a decisão era "modelo 3D como
+produto principal, sem PDF"; em 2026-09-16 isso foi revertido — ver o aviso
+no topo do arquivo.** O texto original desta seção, mantido como histórico:
 
 Infoproduto de baixo ticket para marceneiros / "maridos de aluguel": 100
 projetos de móveis para gatos em modelo 3D (não são mais PDFs de fichas
@@ -231,10 +297,12 @@ aberto.
 - Sem avisos de "pré-venda" ou placeholder visível — o usuário pediu para
   tratar a página como versão final desde o primeiro rascunho.
 - Nunca reintroduzir tom marrom/terra na paleta.
-- Nunca voltar a mostrar fichas técnicas desenhadas/estáticas como imagem de
-  produto — é sempre 3D real ou preview/render real.
+- ~~Nunca voltar a mostrar fichas técnicas desenhadas/estáticas como imagem
+  de produto~~ — **REVOGADO em 2026-09-16, ver aviso no topo do arquivo.**
+  Fichas em PDF são agora o produto principal; o 3D vira bônus.
 - Modelos 3D sempre sob demanda (clique), nunca no carregamento inicial da
-  página — é requisito de performance explícito.
+  página — continua valendo, mas agora como seção de bônus, não a atração
+  principal da página.
 - Preferir nichos e torres ao escolher quais dos 50 projetos destacar; evitar
   peças simples demais (ex.: painéis lisos).
 - Qualquer alteração de preço, bônus ou produtos ativos na Cakto só deve ser

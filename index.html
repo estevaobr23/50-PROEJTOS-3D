@@ -394,6 +394,42 @@ section{ padding:84px 0; position:relative; }
   box-shadow:0 8px 20px hsla(21,80%,45%,.28);
 }
 
+/* Carrossel das fichas técnicas em PDF — mesma engine do .page-marquee,
+   mas com imagens em proporção vertical (A4) pois são páginas de ficha
+   técnica reais, não fotos lifestyle 4x3. */
+.ficha-marquee{ display:flex; flex-direction:column; gap:10px; margin-bottom:40px; }
+.fm-row{ overflow-x:clip; overflow-y:visible;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
+.fm-track{ display:flex; gap:22px; width:max-content; will-change:transform; padding:14px 0; }
+.fm-left { animation:pm-scroll-left  50s linear infinite; }
+.fm-right{ animation:pm-scroll-right 50s linear infinite; }
+.ficha-marquee:hover .fm-track{ animation-play-state:paused; }
+.fm-img{ display:block; height:380px; width:auto; flex:none;
+  border-radius:var(--radius-md); border:1px solid var(--border);
+  box-shadow:0 10px 26px hsla(222,25%,15%,.16); object-fit:contain; background:#fff; }
+
+.ebook-preview{ margin:8px 0 40px; text-align:center; }
+.ebook-preview .ep-chip{
+  display:inline-flex; align-items:center; gap:8px; font-family:var(--font-num);
+  font-weight:700; font-size:.82rem; letter-spacing:.02em; text-transform:uppercase;
+  color:var(--coral-dark); background:hsla(21,90%,48%,.1); border:1px solid hsla(21,90%,48%,.25);
+  padding:8px 16px; border-radius:var(--radius-pill); margin-bottom:18px;
+}
+.ebook-preview .ep-frame{
+  max-width:420px; margin:0 auto; border-radius:var(--radius-lg);
+  border:1px solid var(--border); box-shadow:var(--shadow-large);
+  overflow:hidden; background:#fff;
+}
+.ebook-preview .ep-frame img{ display:block; width:100%; height:auto; }
+.ebook-preview .ep-frame--flip{
+  max-width:720px; aspect-ratio:16/10;
+}
+.ebook-preview .ep-frame--flip iframe{
+  display:block; width:100%; height:100%; border:0;
+}
+.ebook-preview .ep-caption{ margin-top:14px; font-size:.92rem; color:var(--text-muted); }
+
 .page-marquee{ display:flex; flex-direction:column; gap:10px; }
 .pm-row{ overflow-x:clip; overflow-y:visible;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
@@ -845,6 +881,51 @@ footer .copy{ font-size:.82rem; margin-top:18px; }
 
     </div>
 
+    <div class="page-marquee reveal">
+      <div class="pm-row">
+        <div class="pm-track pm-left">
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/A1-degraus-escalonados-4x3.webp" loading="lazy" alt="Projeto de degraus escalonados de parede para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/A4-passarela-reta-4x3.webp" loading="lazy" alt="Projeto de passarela reta para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/B1-ponte-ripas-4x3.webp" loading="lazy" alt="Projeto de ponte de ripas para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/C1-poste-ligacao-4x3.webp" loading="lazy" alt="Projeto de poste de ligação para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/D1-painel-escalada-4x3.webp" loading="lazy" alt="Projeto de painel de escalada para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/A1-degraus-escalonados-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/A4-passarela-reta-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/B1-ponte-ripas-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/C1-poste-ligacao-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/D1-painel-escalada-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+        </div>
+      </div>
+      <div class="pm-row">
+        <div class="pm-track pm-right">
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/022-casinha-suspensa-4x3.webp" loading="lazy" alt="Projeto de casinha suspensa para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/E4-nicho-tunel-4x3.webp" loading="lazy" alt="Projeto de nicho túnel para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/G3-mirante-janela-4x3.webp" loading="lazy" alt="Projeto de mirante de janela para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/H3-cama-concha-4x3.webp" loading="lazy" alt="Projeto de cama concha para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/J1-protetor-canto-sofa-4x3.webp" loading="lazy" alt="Projeto de protetor de canto de sofá para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/022-casinha-suspensa-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/E4-nicho-tunel-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/G3-mirante-janela-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/H3-cama-concha-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/J1-protetor-canto-sofa-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+        </div>
+      </div>
+      <div class="pm-row">
+        <div class="pm-track pm-left pm-slow">
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/033-poste-arranhador-4x3.webp" loading="lazy" alt="Projeto de poste arranhador para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/032-painel-canto-4x3.webp" loading="lazy" alt="Projeto de painel arranhador de canto para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/039-arvore-compacta-4x3.webp" loading="lazy" alt="Projeto de árvore compacta para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/040-arvore-3-niveis-4x3.webp" loading="lazy" alt="Projeto de árvore de três níveis para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/L2-comedouro-duplo-4x3.webp" loading="lazy" alt="Projeto de comedouro duplo para gatos" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/033-poste-arranhador-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/032-painel-canto-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/039-arvore-compacta-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/040-arvore-3-niveis-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="pm-img" src="assets/inside/lifestyle-4x3/L2-comedouro-duplo-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+
     <div class="desire-strip reveal">
       <span class="ds-icon">✦ ✦ ✦</span>
       <p class="ds-text">
@@ -902,10 +983,11 @@ footer .copy{ font-size:.82rem; margin-top:18px; }
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Veja por dentro</span>
-      <h2>Renders <span class="hl">3D reais</span> de parte do catálogo</h2>
+      <h2>Fichas <span class="hl">técnicas visuais</span> de parte do catálogo</h2>
       <div class="rule"></div>
       <p>Os 100 projetos são organizados por necessidade do gato — cada um
-         com modelo 3D real, não desenho de referência.</p>
+         com ficha ilustrada, medidas e lista de corte, mais o modelo 3D
+         navegável de brinde.</p>
     </div>
 
     <div class="cat-marquee reveal">
@@ -939,7 +1021,7 @@ footer .copy{ font-size:.82rem; margin-top:18px; }
           <span class="cat-badge cat-badge--destaque">Árvore Compacta de 2 Níveis</span>
           <span class="cat-badge">Rede Suspensa de Parede</span>
           <span class="cat-badge">Poste de Ligação entre Dois Níveis</span>
-          <span class="cat-badge">+ 35 outros projetos</span>
+          <span class="cat-badge">+ 69 outros projetos</span>
           <!-- duplicado para o loop não emendar -->
           <span class="cat-badge cat-badge--destaque">Casinha Suspensa com Telhado</span>
           <span class="cat-badge">Cama Concha com Laterais Retas</span>
@@ -948,7 +1030,7 @@ footer .copy{ font-size:.82rem; margin-top:18px; }
           <span class="cat-badge cat-badge--destaque">Árvore Compacta de 2 Níveis</span>
           <span class="cat-badge">Rede Suspensa de Parede</span>
           <span class="cat-badge">Poste de Ligação entre Dois Níveis</span>
-          <span class="cat-badge">+ 35 outros projetos</span>
+          <span class="cat-badge">+ 69 outros projetos</span>
         </div>
       </div>
       <div class="cat-row">
@@ -995,47 +1077,43 @@ footer .copy{ font-size:.82rem; margin-top:18px; }
       </div>
     </div>
 
-    <div class="page-marquee reveal">
-      <div class="pm-row">
-        <div class="pm-track pm-left">
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/A1-degraus-escalonados-4x3.webp" loading="lazy" alt="Projeto de degraus escalonados de parede para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/A4-passarela-reta-4x3.webp" loading="lazy" alt="Projeto de passarela reta para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/B1-ponte-ripas-4x3.webp" loading="lazy" alt="Projeto de ponte de ripas para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/C1-poste-ligacao-4x3.webp" loading="lazy" alt="Projeto de poste de ligação para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/D1-painel-escalada-4x3.webp" loading="lazy" alt="Projeto de painel de escalada para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/A1-degraus-escalonados-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/A4-passarela-reta-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/B1-ponte-ripas-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/C1-poste-ligacao-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/D1-painel-escalada-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+    <div class="ebook-preview reveal">
+      <span class="ep-chip">✦ Prévia do material</span>
+      <div class="ep-frame ep-frame--flip">
+        <iframe src="https://heyzine.com/flip-book/97ac940289.html" loading="lazy"
+                title="Prévia folheável do catálogo 100 Projetos de Móveis 3D para Gatos"
+                allowfullscreen frameborder="0"></iframe>
+      </div>
+      <p class="ep-caption">Folheie a prévia: capa, boas-vindas, como usar e o índice por categorias.</p>
+    </div>
+
+    <div class="ficha-marquee reveal">
+      <div class="fm-row">
+        <div class="fm-track fm-left">
+          <img class="fm-img" src="assets/fichas-preview/003-torre-alta-vertical.webp" loading="lazy" alt="Ficha técnica: Torre Alta Vertical" />
+          <img class="fm-img" src="assets/fichas-preview/024-nicho-tunel-com-entrada-em-angulo.webp" loading="lazy" alt="Ficha técnica: Nicho Túnel com Entrada em Ângulo" />
+          <img class="fm-img" src="assets/fichas-preview/031-casinha-suspensa-com-telhado-de-dois-planos.webp" loading="lazy" alt="Ficha técnica: Casinha Suspensa com Telhado de Dois Planos" />
+          <img class="fm-img" src="assets/fichas-preview/001-arvore-compacta-2-niveis.webp" loading="lazy" alt="Ficha técnica: Árvore Compacta de 2 Níveis" />
+          <img class="fm-img" src="assets/fichas-preview/047-cama-concha-com-laterais-retas.webp" loading="lazy" alt="Ficha técnica: Cama Concha com Laterais Retas" />
+          <img class="fm-img" src="assets/fichas-preview/003-torre-alta-vertical.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="fm-img" src="assets/fichas-preview/024-nicho-tunel-com-entrada-em-angulo.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="fm-img" src="assets/fichas-preview/031-casinha-suspensa-com-telhado-de-dois-planos.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="fm-img" src="assets/fichas-preview/001-arvore-compacta-2-niveis.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="fm-img" src="assets/fichas-preview/047-cama-concha-com-laterais-retas.webp" loading="lazy" alt="" aria-hidden="true" />
         </div>
       </div>
-      <div class="pm-row">
-        <div class="pm-track pm-right">
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/022-casinha-suspensa-4x3.webp" loading="lazy" alt="Projeto de casinha suspensa para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/E4-nicho-tunel-4x3.webp" loading="lazy" alt="Projeto de nicho túnel para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/G3-mirante-janela-4x3.webp" loading="lazy" alt="Projeto de mirante de janela para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/H3-cama-concha-4x3.webp" loading="lazy" alt="Projeto de cama concha para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/J1-protetor-canto-sofa-4x3.webp" loading="lazy" alt="Projeto de protetor de canto de sofá para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/022-casinha-suspensa-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/E4-nicho-tunel-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/G3-mirante-janela-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/H3-cama-concha-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/J1-protetor-canto-sofa-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-        </div>
-      </div>
-      <div class="pm-row">
-        <div class="pm-track pm-left pm-slow">
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/033-poste-arranhador-4x3.webp" loading="lazy" alt="Projeto de poste arranhador para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/032-painel-canto-4x3.webp" loading="lazy" alt="Projeto de painel arranhador de canto para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/039-arvore-compacta-4x3.webp" loading="lazy" alt="Projeto de árvore compacta para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/040-arvore-3-niveis-4x3.webp" loading="lazy" alt="Projeto de árvore de três níveis para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/L2-comedouro-duplo-4x3.webp" loading="lazy" alt="Projeto de comedouro duplo para gatos" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/033-poste-arranhador-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/032-painel-canto-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/039-arvore-compacta-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/040-arvore-3-niveis-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
-          <img class="pm-img" src="assets/inside/lifestyle-4x3/L2-comedouro-duplo-4x3.webp" loading="lazy" alt="" aria-hidden="true" />
+      <div class="fm-row">
+        <div class="fm-track fm-right">
+          <img class="fm-img" src="assets/fichas-preview/059-ponte-suspensa-de-ripas-com-corda.webp" loading="lazy" alt="Ficha técnica: Ponte Suspensa de Ripas com Corda" />
+          <img class="fm-img" src="assets/fichas-preview/069-comedouro-elevado-duplo.webp" loading="lazy" alt="Ficha técnica: Comedouro Elevado Duplo" />
+          <img class="fm-img" src="assets/fichas-preview/013-poste-arranhador-de-chao.webp" loading="lazy" alt="Ficha técnica: Poste Arranhador de Chão" />
+          <img class="fm-img" src="assets/fichas-preview/039-mirante-de-janela.webp" loading="lazy" alt="Ficha técnica: Mirante de Janela" />
+          <img class="fm-img" src="assets/fichas-preview/084-playground-familia.webp" loading="lazy" alt="Ficha técnica: Playground Família" />
+          <img class="fm-img" src="assets/fichas-preview/059-ponte-suspensa-de-ripas-com-corda.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="fm-img" src="assets/fichas-preview/069-comedouro-elevado-duplo.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="fm-img" src="assets/fichas-preview/013-poste-arranhador-de-chao.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="fm-img" src="assets/fichas-preview/039-mirante-de-janela.webp" loading="lazy" alt="" aria-hidden="true" />
+          <img class="fm-img" src="assets/fichas-preview/084-playground-familia.webp" loading="lazy" alt="" aria-hidden="true" />
         </div>
       </div>
     </div>
